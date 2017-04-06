@@ -26,7 +26,9 @@ es = Elasticsearch(
 ) 
 #print(es.info())
 
+#r = requests.get('x-amz-sns-message-type')
 
+#print r.text
 
 @application.route('/', methods=['POST'])
 def map():

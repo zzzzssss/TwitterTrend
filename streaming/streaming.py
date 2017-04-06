@@ -21,7 +21,7 @@ class MyStreamListener(tweepy.StreamListener):
         print(status.text)
 
     def on_data(self, data):
-        #Reference: https://dev.twitter.com/overview/api/tweets
+        #streaming data reference: https://dev.twitter.com/overview/api/tweets
         try: 
              # Twitter returns data in JSON format - we need to decode it first
             decoded = json.loads(data)
