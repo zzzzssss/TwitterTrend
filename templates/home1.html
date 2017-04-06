@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TweetMap</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}" />
+    <style type="text/css">
+        html, body { 
+        height: 100%;
+      }
+      #map { 
+        height: 100%; 
+      }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">Please select keyword</a>
+            </div>
+    <ul class="nav navbar-nav navbar-left">
+    <form method="POST"> 
+
+        <select name ="dropdown" >
+            <option selected="selected"  disabled="disabled"></option>
+            <option value="Restaurant">Restaurant</option>
+            <option value="Basketball">Basketball</option>
+            <option value="Weather">Weather</option>
+            <option value="Friday">Friday</option>
+            <option value="Cloud">Cloud</option>
+            <option value="Movie">Movie</option>
+            <option value="Panda">Panda</option>
+            <option value="God">God</option>
+            <option value="Trump">Trump</option>
+            <option value="Hilarious">Hilarious</option>
+        </select>
+    </ul>
+
+     <div class="navbar-header">
+              <a class="navbar-brand" href="#"> Please select display max size</a>
+            </div>
+
+    <ul class="nav navbar-nav navbar-left">
+    <form method="POST"> 
+
+        <select name ="dropdown2" >
+            <option selected="maxsize"  disabled="disabled"></option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="150">150</option>
+            <option value="200">200</option>
+        </select>
+    </ul>
+    
+    <div class="keyword">
+      
+       <a class="navbar-brand" href="#">    keyword: {{selected}}</a>
+
+       <a class="navbar-brand" href="#">total showed twitters in map: {{count}}</a>
+  
+      
+    </div>
+
+<ul class="nav navbar-nav navbar-right">
+                <button type="button" class="btn btn-default navbar-btn" onclick='this.form.submit()'>Search</button>
+            </ul>
+            
+</form>
+<noscript><input type="submit" value="Submit"></noscript>
+
+    </nav>
+
+  <div id="map"></div>
+  <script type="text/javascript" src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='bower_components/moment/min/moment.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+
+  
+  <script src="http://maps.google.com/maps/api/js?sensor=false&libraries=visualization" type="text/javascript"></script>
+ 
+
+  <script type="text/javascript" src="{{ url_for('static', filename='map.js') }}"></script>
+  <script type="text/javascript">    
+    var marker_list = {{marker_list|tojson}};
+    var result=initMap(marker_list);
+  </script>
+
+
+</body>
+</html>
