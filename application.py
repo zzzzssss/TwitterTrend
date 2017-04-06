@@ -8,7 +8,7 @@ from flask_googlemaps import Map
 from elasticsearch import Elasticsearch, RequestsHttpConnection
 import random
 import math
-
+import requests
 # Elastic Beanstalk initalization
 application = Flask(__name__)
 application.debug=True
@@ -23,9 +23,11 @@ es = Elasticsearch(
     verify_certs=True,
     connection_class=RequestsHttpConnection
 ) 
-print(es.info())
+#print(es.info())
 
+#r = requests.get('x-amz-sns-message-type')
 
+#print r.text
 
 @application.route('/', methods=['POST'])
 def map():
