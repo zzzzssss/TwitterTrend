@@ -13,7 +13,7 @@ import requests
 application = Flask(__name__)
 application.debug=True
 # change this to your own value
-application.secret_key = 'cC1YCIWOj9GgWspgNEo2'  
+#application.secret_key = 'cC1YCIWOj9GgWspgNEo2'  
 
 host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
 
@@ -25,9 +25,9 @@ es = Elasticsearch(
 ) 
 #print(es.info())
 
-#r = requests.get('x-amz-sns-message-type')
+r = requests.get('http://twittertrend2-dev2.us-west-2.elasticbeanstalk.com/')
 
-#print r.text
+print r.text
 
 @application.route('/', methods=['POST'])
 def map():
