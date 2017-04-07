@@ -9,6 +9,7 @@ from elasticsearch import Elasticsearch, RequestsHttpConnection
 import random
 import math
 import requests
+
 # Elastic Beanstalk initalization
 application = Flask(__name__)
 application.debug=True
@@ -32,6 +33,9 @@ print r.text
 @application.route('/', methods=['POST'])
 def map():
     # creating a map in the view
+   
+
+
     try:
         dp_res = request.form['dropdown']
         dp_res2=request.form['dropdown2']

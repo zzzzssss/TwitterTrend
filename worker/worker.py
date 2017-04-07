@@ -28,8 +28,12 @@ def worker():
                     encoded = json.dumps(tweet, ensure_ascii=False)
                     # Publish to Amazon SNS
                     topic.publish(Message=encoded)
+                     
+
             finally:
                 message.delete()
+
+
 
 if __name__ == '__main__':
     worker()
