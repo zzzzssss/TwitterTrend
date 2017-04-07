@@ -11,9 +11,13 @@ sqs = boto3.resource('sqs')
 queue = sqs.get_queue_by_name(QueueName='TwitterTrend')
 
 
-sns = boto3.resource('sns')
+client = boto3.client('sns')
+response = client.create_topic(Name = 'tweets')
+topicArn = response['TopicArn']
+subscribeResponse = client.subscribe(TopicArn = topicArn, Protocol = 'http', Endpoint = 'http://twitttrend.us-west-2.elasticbeanstalk.com/')
+#sns = boto3.resource('sns')
 #IMPORTANT: sns and aws region needs to be the same: here both are us-west-2 Oregon
-topic = sns.Topic('arn:aws:sns:us-west-2:217770466492:TwitterSentiment') 
+#topic = sns.Topic('arn:aws:sns:us-west-2:217770466492:TwitterSentiment') 
 
 
 def worker():
@@ -21,24 +25,24 @@ def worker():
         for message in queue.receive_messages(MaxNumberOfMessages=10, WaitTimeSeconds=20): #message.body type: unicode
             try:
                 tweet = json.loads(message.body)   #tweet type:dict
-                response = alchemy_language.sentiment(text=tweet['text'])   #tweet['text']: unicode
-                if response['status'] == 'OK':
-                    tweet['sentiment'] = response['docSentiment']['type']
-                    print tweet['sentiment'] 
-                    encoded = json.dumps(tweet, ensure_ascii=False)
-                    # Publish to Amazon SNS
-                    topic.publish(Message=encoded)
-                     
+                print tweet
+                # response = alchemy_language.sentiment(text=tweet['text'])   #tweet['text']: unicode
+                # if response['status'] == 'OK':
+                #     tweet['sentiment'] = response['docSentiment']['type']
+                #     print tweet['sentiment'] 
+                #     #encoded = json.dumps(tweet, ensure_ascii=False)
+                #     # Publish to Amazon SNS
+                client.publish(TopicArn = topicArn, Message=json.dumps(tweet, ensure_ascii=False))
+            #except:
+                #pass
 
             finally:
                 message.delete()
 
-
-
 if __name__ == '__main__':
     worker()
-#     pool = Pool(3)
-#     pool.map(worker, range(3))
+     #pool = Pool(3)
+     #pool.map(worker, range(3))
 
 
 

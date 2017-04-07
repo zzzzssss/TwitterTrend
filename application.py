@@ -5,16 +5,17 @@ Uses Elastic Beanstalk
 '''
 from flask import Flask, render_template, request
 from flask_googlemaps import Map
+from flask_socketio import SocketIO, send, emit
 from elasticsearch import Elasticsearch, RequestsHttpConnection
 import random
 import math
 import requests
-
 # Elastic Beanstalk initalization
 application = Flask(__name__)
-application.debug=True
-# change this to your own value
-#application.secret_key = 'cC1YCIWOj9GgWspgNEo2'  
+#application.debug=True
+socketio = SocketIO(application)
+socketConnected = False
+
 
 host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
 
@@ -26,21 +27,17 @@ es = Elasticsearch(
 ) 
 #print(es.info())
 
-r = requests.get('http://twittertrend2-dev2.us-west-2.elasticbeanstalk.com/')
 
-print r.text
 
 @application.route('/', methods=['POST'])
-def map():
-    # creating a map in the view
-   
-
-
+def map():    
+# creating a map in the view
     try:
         dp_res = request.form['dropdown']
         dp_res2=request.form['dropdown2']
     except:
         return render_template('home1.html', marker_list = [], count='')
+    
 
     selected = dp_res
     maxsize=int(dp_res2)
@@ -48,10 +45,10 @@ def map():
         
     res = es.search(index="twittertrend", doc_type="tweets", q=selected, size=maxsize)
     locationst=[]
-   
+
     print("%d documents found" % res['hits']['total'])
 
-    
+
     print len(res['hits']['hits'])
     for doc in res['hits']['hits']:
         #print doc
@@ -81,12 +78,12 @@ def map():
         
             x = w * math.cos(t) 
             y = w * math.sin(t)
-    
+
             xLat  = x + x0
             yLong = y + y0
             point = (xLat, yLong)
             locationst.append([point, text])
-    
+
     # number of tweets   
     number = len(locationst)  
     #print locationst[1][0]
@@ -96,9 +93,35 @@ def map():
 
 @application.route('/', methods=['GET','POST'])
 def home():
+    #global socketConnected
+    if request.method == 'POST':
+        try:
+            js = json.loads(request.data)
+            print js
+        except:
+            pass
+        hdr=request.hearders.get('x-amz-sns-message-type')
+        print hdr
+        if hdr == 'SubscriptionConfirmation' and 'SubscribeURL' in js:
+            r = requests.get(js['SubscribeURL'])
+        # if hdr == 'Notification':
+        #     tweet = js['Message']
+        #     print tweet
+        #     es.index(index="twittertrend", doc_type="tweets", id= tweet['id'], body= tweet)
+        # if socketConnected:
+        #         socketio.emit('realTimeResponse', tweet)
+
 
     return render_template('home1.html', marker_list = [], count='')
 
+@socketio.on('realTime')
+def handle_my_custom_event(message):
+    global socketConnected
+    socketConnected = True
+    print('received message:' + message)
+
 
 if __name__ == '__main__':
-    application.run(host='0.0.0.0')
+    socketio.run(application, host='0.0.0.0')
+    #socketio.run(application, host="192.168.0.5",port=5010)
+    #http://192.168.0.5:5010/
