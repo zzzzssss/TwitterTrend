@@ -28,7 +28,7 @@ socketio = SocketIO(application)
 #     verify_certs=True,
 #     connection_class=RequestsHttpConnection
 # ) 
-res = es2.index(index="test-index2", doc_type='tweet', id=1, body=doc)
+#res = es2.index(index="test-index2", doc_type='tweet', id=1, body=doc)
 
 
 #socketConnected = False
