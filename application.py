@@ -97,7 +97,7 @@ def home():
 
     if request.method == 'POST':
         try:
-            js = json.loads(request.data)
+            js = json.loads(str(request.data))
             js= request.get_json(force=True)
             # print "js:"
             # print js
@@ -108,8 +108,8 @@ def home():
             pass
         hdr=request.headers.get('x-amz-sns-message-type')
         print hdr 
-        print request.headers
-        print request.data
+        #print request.headers
+        #print request.data
         #print request.data['SubscribeURL']
         #print type(request)
         # if hdr == 'SubscriptionConfirmation':
