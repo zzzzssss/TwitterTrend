@@ -25,12 +25,12 @@ es = Elasticsearch(
     verify_certs=True,
     connection_class=RequestsHttpConnection
 ) 
-#print(es.info())
+print(es.info())
 
 
 
-@application.route('/', methods=['POST'])
-def map():    
+# @application.route('/', methods=['POST'])
+# def map():    
 # creating a map in the view
     # try:
     #     dp_res = request.form['dropdown']
