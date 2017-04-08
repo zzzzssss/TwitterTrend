@@ -25,7 +25,7 @@ es = Elasticsearch(
     hosts=[{'host': host, 'port': 443}],
     use_ssl=True,
     verify_certs=True,
-    connection_class=RequestsHttpConnection
+    #connection_class=RequestsHttpConnection
 ) 
 print(es.info())
 
@@ -95,7 +95,7 @@ print(es.info())
 
 @application.route('/', methods=['GET','POST'])
 def home():
-    #global socketConnected
+    global socketConnected
 
     if request.method == 'POST':
         
