@@ -24,7 +24,7 @@ esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com
 @application.route('/home', methods=['GET','POST'])
 def home():
 
-return render_template('home1.html', marker_list = [], count='')
+    return render_template('home1.html', marker_list = [], count='')
 
 
 
