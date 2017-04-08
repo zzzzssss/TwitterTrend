@@ -27,7 +27,7 @@ es = Elasticsearch(
     verify_certs=True,
     connection_class=RequestsHttpConnection
 ) 
-#print(es.info())
+print(es.info())
 
 
 
@@ -110,8 +110,8 @@ def home():
         if hdr == 'Notification':
             tweet = js['Message']
             print tweet
-            #es.index(index="twittertrend", doc_type="tweets", body= tweet)
-            r = requests.post(esurl, json = tweet)
+            es.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
+            #r = requests.post(esurl, json = tweet)
         if socketConnected:
                 socketio.emit('realTimeResponse', tweet)
 
