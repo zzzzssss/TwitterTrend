@@ -6,7 +6,7 @@ import random
 import math
 import requests
 import json
-from requests_aws4auth import AWS4auth
+from requests_aws4auth import AWS4AUTH
 # Elastic Beanstalk initalization
 application = Flask(__name__)
 #application.debug=True
