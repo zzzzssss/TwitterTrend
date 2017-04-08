@@ -22,7 +22,8 @@ socketio = SocketIO(application)
 #host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
 #esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/twittertrend/tweets'
 host='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
-client = Elasticsearch([host])
+#client = Elasticsearch([host])
+es = Elasticsearch([{'host': 'localhost', 'port': 5000}])
 # es = Elasticsearch(
 #     hosts=[{'host': host, 'port': 443}],
 #     use_ssl=True,
@@ -112,8 +113,8 @@ def home():
         if hdr == 'Notification':
             tweet = js['Message']
             print tweet
-            client.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
-            #es.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
+            #client.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
+            es.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
             #r = requests.post(esurl, json = tweet)
         if socketConnected:
                 socketio.emit('realTimeResponse', tweet)
