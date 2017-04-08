@@ -1,7 +1,7 @@
 #Example from AWS document:
 curl -XPUT search-movies-4f3nw7eiia2xiynjr55a2nao2y.us-west-1.es.amazonaws.com/movies/movie/tt0116996 -d '{"directors" : ["Tim Burton"],"genres" : ["Comedy","Sci-Fi"],"plot" : "The Earth is invaded by Martians with irresistible weapons and a cruel sense of humor.","title" : "Mars Attacks!","actors" : ["Jack Nicholson","Pierce Brosnan","Sarah Jessica Parker"],"year" : 1996}'
 
-curl -XGET 'search-movies-4f3nw7eiia2xiynjr55a2nao2y.us-west-1.es.amazonaws.com/movies/_search?q=nightmare'
+curl -XGET 'search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/movies/_search?q=nightmare'
 
 curl -XPOST 'http://search-movies-4f3nw7eiia2xiynjr55a2nao2y.us-west-1.es.amazonaws.com/_bulk' --data-binary @bulk_movies.json
 
@@ -34,4 +34,34 @@ curl -XPUT search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/tw
             }
         }
     }
+}'
+
+
+
+
+
+
+
+curl -XPUT search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test -d '
+{
+        "tweets": {
+            
+                "user": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                },
+                "time": {
+                    "type": "date"
+                },
+                "text": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "geo_point"
+                },
+                "sentiment": {
+                    "type": "string"
+                }
+            
+        }
 }'

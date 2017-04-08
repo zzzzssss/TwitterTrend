@@ -13,7 +13,13 @@ import json
 application = Flask(__name__)
 application.debug=True
 socketio = SocketIO(application)
-#es=Elasticsearch()
+es=Elasticsearch()
+doc = {
+    'author': 'kimchy',
+    'text': 'Elasticsearch: cool. bonsai cool.',
+    'timestamp': datetime.now(),
+}
+res = es.index(index="test-index", doc_type='tweet', id=1, body=doc)
 
 #socketConnected = False
 
@@ -26,13 +32,14 @@ socketio = SocketIO(application)
 #print (client.info())
 #es = Elasticsearch(['http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/twittertrend/_all/_mapping'])
 # es = Elasticsearch(
-#     hosts=[{'host': host, 'port': 5000}],
+#     hosts=[{'host': host, 'port': 423}],
 #     use_ssl=True,
 #     verify_certs=True,
 #     connection_class=RequestsHttpConnection
 # ) 
+
+
 # print(es.info())
-es=Elasticsearch()
 
 
 
@@ -116,7 +123,7 @@ def home():
             tweet = js['Message']
             print tweet
             #client.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
-            es.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
+            #es.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
             #r = requests.post(esurl, json=tweet)
             #r = requests.post(esurl, data=json.dumps(tweet))
 
