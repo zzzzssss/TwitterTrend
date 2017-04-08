@@ -11,6 +11,7 @@ import json
 application = Flask(__name__)
 application.debug=True
 socketio = SocketIO(application)
+socketConnected = False
 
 esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet'
 # es = Elasticsearch(
