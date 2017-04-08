@@ -118,7 +118,7 @@ def home():
             r = requests.get(js['SubscribeURL'])
             #print request.data['SubscribeURL']
         if hdr == 'Notification':
-            tweet = request.data['Message']
+            tweet = js['Message']
             print tweet
         #     es.index(index="twittertrend", doc_type="tweets", id= tweet['id'], body= tweet)
         # if socketConnected:
