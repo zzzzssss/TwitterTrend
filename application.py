@@ -41,7 +41,7 @@ def map():
 
     selected = dp_res
     maxsize=int(dp_res2)
-    print type(selected), dp_res2, maxsize
+    #print type(selected), dp_res2, maxsize
 
     # queryURL = 'http://localhost:9201/tweetmap/_search?q=*:*&size=1000'
     queryURL = 'http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet/_search?q='
@@ -49,7 +49,7 @@ def map():
     print queryURL
     response = requests.get(queryURL)
     res = json.loads(response.text)
-    print res['hits']['hits']
+    #print res['hits']['hits']
         
     #res = es.search(index="twittertrend", doc_type="tweets", q=selected, size=maxsize)
     locationst=[]
