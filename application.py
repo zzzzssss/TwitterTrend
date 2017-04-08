@@ -102,10 +102,10 @@ def home():
             pass
         hdr=request.headers.get('x-amz-sns-message-type')
         print hdr 
-        print request.text
-        # if hdr == 'SubscriptionConfirmation':
-        #     r = requests.get(js['SubscribeURL'])
-        #     print r
+        print request.headers
+        if hdr == 'SubscriptionConfirmation' and 'SubscribeURL' in js:
+            r = requests.get(js['SubscribeURL'])
+            print js['SubscribeURL']
         # if hdr == 'Notification':
         #     tweet = js['Message']
         #     print tweet
