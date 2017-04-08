@@ -95,7 +95,8 @@ def map():
     number = len(locationst)  
     #print locationst[1][0]
     #print locationst[1][1]
-    return render_template('home1.html', marker_list= locationst, count=number, selected=selected)
+    return render_template('home1.html', marker_list= [], count=[], selected=[])
+    #return render_template('home1.html', marker_list= locationst, count=number, selected=selected)
 
 
 @application.route('/', methods=['GET','POST'])
