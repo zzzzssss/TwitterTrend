@@ -103,6 +103,10 @@
     socket.on('realTimeResponse', function(tweet) {
 
             console.log("New Tweet");
+            var tweetJSON = JSON.parse(tweet);
+            var location = tweetJSON['location'];
+            var sentiment = tweetJSON['sentiment'];
+            console.log("got location and setiment");
 
       });
     
