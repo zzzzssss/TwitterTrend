@@ -44,7 +44,8 @@ def map():
 
     # queryURL = 'http://localhost:9201/tweetmap/_search?q=*:*&size=1000'
     queryURL = 'http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet/_search?q='
-    queryURL=queryURL+selected+'&size='+maxsize
+    queryURL=queryURL+selected+'&size=300'
+    print queryURL
     response = requests.get(queryURL)
     res = json.loads(response.text)
     print res
@@ -112,7 +113,7 @@ def sns():
             
         if hdr == 'Notification':
             tweet_js = js['Message']
-            print tweet_js
+            #print tweet_js
             r = requests.post(esurl, data=tweet_js)
             #print r.text
         if socketConnected:
