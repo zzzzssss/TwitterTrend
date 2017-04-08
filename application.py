@@ -97,13 +97,14 @@ def home():
     if request.method == 'POST':
         try:
             js = json.loads(request.data)
-            print js
+            #print js
         except:
             pass
         hdr=request.headers.get('x-amz-sns-message-type')
         print hdr
-        # if hdr == 'SubscriptionConfirmation' and 'SubscribeURL' in js:
-        #     r = requests.get(js['SubscribeURL'])
+        if hdr == 'SubscriptionConfirmation':
+            r = requests.get(js['SubscribeURL'])
+            print r
         # if hdr == 'Notification':
         #     tweet = js['Message']
         #     print tweet
