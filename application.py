@@ -29,7 +29,7 @@ host='search-twitttrend-p3dwnc67tiu2brpgv3py5i4czq.us-west-2.es.amazonaws.com'
 #print (client.info())
 #es = Elasticsearch(['http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/twittertrend'])
 es = Elasticsearch(
-    hosts=[{'host': host, 'port': 443}],
+    hosts=[{'host': host, 'port': 5000}],
     use_ssl=True,
     verify_certs=True,
     connection_class=RequestsHttpConnection
