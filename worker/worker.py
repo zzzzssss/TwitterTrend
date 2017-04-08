@@ -14,8 +14,8 @@ queue = sqs.get_queue_by_name(QueueName='TwitterTrend')
 client = boto3.client('sns')
 response = client.create_topic(Name = 'tweets')
 topicArn = response['TopicArn']
-subscribeResponse = client.subscribe(TopicArn = topicArn, Protocol = 'http', Endpoint = 'http://54.202.67.200:5000/')
-#subscribeResponse = client.subscribe(TopicArn = topicArn, Protocol = 'http', Endpoint = 'http://160.39.135.50:5000/sns')
+#subscribeResponse = client.subscribe(TopicArn = topicArn, Protocol = 'http', Endpoint = 'http://54.202.67.200:5000/')
+#subscribeResponse = client.subscribe(TopicArn = topicArn, Protocol = 'http', Endpoint = 'http://52.26.22.105:5000/')
 
 #sns = boto3.resource('sns')
 #IMPORTANT: sns and aws region needs to be the same: here both are us-west-2 Oregon
