@@ -30,7 +30,7 @@ def home():
 
 @application.route('/home', methods=['POST'])
 def map():    
-creating a map in the view
+#creating a map in the view
     try:
         dp_res = request.form['dropdown']
         dp_res2=request.form['dropdown2']
