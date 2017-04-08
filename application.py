@@ -104,9 +104,9 @@ def home():
         print hdr
         if hdr == 'SubscriptionConfirmation' and 'SubscribeURL' in js:
             r = requests.get(js['SubscribeURL'])
-        # if hdr == 'Notification':
-        #     tweet = js['Message']
-        #     print tweet
+        if hdr == 'Notification':
+            tweet = js['Message']
+            print tweet
         #     es.index(index="twittertrend", doc_type="tweets", id= tweet['id'], body= tweet)
         # if socketConnected:
         #         socketio.emit('realTimeResponse', tweet)
