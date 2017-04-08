@@ -105,8 +105,9 @@ def home():
         print hdr 
         print request.headers
         print request.data
-        print request.data[['SubscribeURL']]
-        if hdr == 'SubscriptionConfirmation' and 'SubscribeURL' in request.data:
+        print request.data['SubscribeURL']
+        print type(request)
+        if hdr == 'SubscriptionConfirmation':
             r = requests.get(request.data['SubscribeURL'])
             #print request.data['SubscribeURL']
         if hdr == 'Notification':
