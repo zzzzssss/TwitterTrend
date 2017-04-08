@@ -20,8 +20,9 @@ socketio = SocketIO(application)
 
 #socketConnected = False
 
+host='search-twitttrend-p3dwnc67tiu2brpgv3py5i4czq.us-west-2.es.amazonaws.com'
 
-host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
+#host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
 #esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
 #host='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
 #client = Elasticsearch([host])
@@ -117,7 +118,7 @@ def home():
             tweet = js['Message']
             print type(tweet)
             #client.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
-            es.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
+            #es.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
             #r = requests.post(esurl, json=tweet)
             #r = requests.post(esurl, data=json.dumps(tweet))
 
