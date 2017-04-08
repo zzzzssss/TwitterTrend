@@ -120,7 +120,7 @@ def home():
         if hdr == 'Notification':
             tweet = js['Message']
             print tweet
-        #     es.index(index="twittertrend", doc_type="tweets", id= tweet['id'], body= tweet)
+            es.index(index="twittertrend", doc_type="tweets", body= tweet)
         # if socketConnected:
         #         socketio.emit('realTimeResponse', tweet)
 
