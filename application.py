@@ -14,7 +14,7 @@ socketio = SocketIO(application)
 socketConnected = False
 
 esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet'
-host=search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com
+host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
 awsauth=AWS4AUTH('AKIAJ4DLBU4HQGRC37FA', 'py3eHrRr1TQ0PzADrCzdAQsHtKtCnS0TcmA/lqwy', 'eu-west-2', 's3')
 
 es = Elasticsearch(
