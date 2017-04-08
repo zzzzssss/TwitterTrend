@@ -99,9 +99,10 @@ def home():
         try:
             js = json.loads(request.data)
             js= request.get_json(force=True)
-            print "js:"
-            print js
-            print request.json
+            # print "js:"
+            # print js
+            # print request.json
+            print jsonfy(request.data)
 
         except:
             pass
