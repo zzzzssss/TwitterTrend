@@ -17,18 +17,15 @@ esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com
 host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
 awsauth=AWS4Auth('AKIAJ4DLBU4HQGRC37FA', 'py3eHrRr1TQ0PzADrCzdAQsHtKtCnS0TcmA/lqwy', 'us-west-2', 'es')
 
-es = Elasticsearch(
-    hosts=[{'host': host, 'port': 423}],
-    http_auth=awsauth,
-    use_ssl=True,
-    verify_certs=True,
-    connection_class=RequestsHttpConnection
-) 
-print(es.info())
-@application.route('/home', methods=['GET','POST'])
-def home():
+# es = Elasticsearch(
+#     hosts=[{'host': host, 'port': 423}],
+#     http_auth=awsauth,
+#     use_ssl=True,
+#     verify_certs=True,
+#     connection_class=RequestsHttpConnection
+# ) 
+# print(es.info())
 
-    return render_template('home1.html', marker_list = [], count='')
 
 
 
@@ -66,8 +63,8 @@ def map():
         #print("%s) %s" % (doc['_id'], doc['_source']['text']))
         #print doc['_source']['coordinates']
         text=doc['_source']['text']
-        if doc['_source']['coordinates']:
-            x= doc['_source']['coordinates']['coordinates']
+        if doc['_source']['location']:
+            x= doc['_source']['location']
             locationst.append([x, text])
 
         # select a random coordinates    
@@ -101,6 +98,11 @@ def map():
     #print locationst[1][1]
     return render_template('home1.html', marker_list= locationst, count=number, selected=selected)
     #return render_template('home1.html', marker_list= locationst, count=number, selected=selected)
+
+@application.route('/home', methods=['GET','POST'])
+def home():
+
+    return render_template('home1.html', marker_list = [], count='')
 
 
 @application.route('/', methods=['GET','POST'])

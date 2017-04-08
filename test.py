@@ -36,3 +36,6 @@ es2 = Elasticsearch(
     connection_class=RequestsHttpConnection
 ) 
 res = es2.index(index="test-index2", doc_type='tweet', body=doc)
+
+res = es2.search(index="test-index2", doc_type="tweet", q='Weather', size=30)
+print res
