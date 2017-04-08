@@ -10,10 +10,12 @@ from elasticsearch import Elasticsearch, RequestsHttpConnection
 import random
 import math
 import requests
+import json
 # Elastic Beanstalk initalization
 application = Flask(__name__)
 #application.debug=True
 socketio = SocketIO(application)
+
 #socketConnected = False
 
 
