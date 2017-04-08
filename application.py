@@ -98,7 +98,8 @@ def home():
     if request.method == 'POST':
         try:
             js = json.loads(request.data)
-            #print js
+            js= request.get_json(force=True)
+            print js
         except:
             pass
         hdr=request.headers.get('x-amz-sns-message-type')
@@ -106,13 +107,13 @@ def home():
         print request.headers
         print request.data
         #print request.data['SubscribeURL']
-        print type(request)
+        #print type(request)
         if hdr == 'SubscriptionConfirmation':
-            r = requests.get(request.data['SubscribeURL'])
+            r = requests.get(request.data.get('SubscribeURL'))
             #print request.data['SubscribeURL']
-        if hdr == 'Notification':
-            tweet = request.data['Message']
-            print tweet
+        # if hdr == 'Notification':
+        #     tweet = request.data['Message']
+        #     print tweet
         #     es.index(index="twittertrend", doc_type="tweets", id= tweet['id'], body= tweet)
         # if socketConnected:
         #         socketio.emit('realTimeResponse', tweet)
