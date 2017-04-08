@@ -101,28 +101,19 @@ def home():
         
         js = json.loads(request.data)
 
-            #js= request.get_json(force=True)
-            # print "js:"
-            # print js
-            # print request.json
-        #print js
-
         
         hdr=request.headers.get('x-amz-sns-message-type')
-        #print hdr 
-        #print request.headers
-        #print request.data
-        #print request.data['SubscribeURL']
-        #print type(request)
+        
         if hdr == 'SubscriptionConfirmation' and 'SubscribeURL' in js:
             r = requests.get(js['SubscribeURL'])
-            #print request.data['SubscribeURL']
+            
         if hdr == 'Notification':
             tweet = js['Message']
             print tweet
-            es.index(index="twittertrend", doc_type="tweets", body= tweet)
-        # if socketConnected:
-        #         socketio.emit('realTimeResponse', tweet)
+            #es.index(index="twittertrend", doc_type="tweets", body= tweet)
+            r = requests.post(host, json = tweet)
+        if socketConnected:
+                socketio.emit('realTimeResponse', tweet)
 
 
     return render_template('home1.html', marker_list = [], count='')

@@ -99,6 +99,36 @@
          console.log("Connected!");
         //socket.emit('my event', {data: 'I\'m connected!'});
     });
+    socket.on('realTimeResponse', function(tweet) {
+
+            console.log("New Tweet");
+            // Parse JSON
+            var tweetJSON = JSON.parse(tweet);
+
+            var longitude = parseFloat((tweetJSON['longitude']));
+            var latitude = parseFloat((tweetJSON['latitude']));
+            var sentiment = tweetJSON['sentiment'];
+
+            var icon;
+            if (sentiment == 'positive') {
+                icon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+            } else if (sentiment == 'negative') {
+                icon = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+            } else {
+                icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+            }
+
+            var markerPosition = {lat: latitude, lng: longitude};
+
+            var marker = new google.maps.Marker({
+                position: markerPosition,
+                icon: icon,
+                map: map
+            });
+             // Add markers to the array
+            googleMarkers.push(marker);
+        });
+
     
 </script>
 
