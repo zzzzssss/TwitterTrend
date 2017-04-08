@@ -99,7 +99,10 @@ def home():
         try:
             js = json.loads(request.data)
             js= request.get_json(force=True)
+            print "js:"
             print js
+            print request.json
+
         except:
             pass
         hdr=request.headers.get('x-amz-sns-message-type')
@@ -108,8 +111,8 @@ def home():
         print request.data
         #print request.data['SubscribeURL']
         #print type(request)
-        if hdr == 'SubscriptionConfirmation':
-            r = requests.get(request.data.get('SubscribeURL'))
+        # if hdr == 'SubscriptionConfirmation':
+        #     r = requests.get(request.data.get('SubscribeURL'))
             #print request.data['SubscribeURL']
         # if hdr == 'Notification':
         #     tweet = request.data['Message']
