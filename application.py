@@ -21,19 +21,19 @@ socketio = SocketIO(application)
 #socketConnected = False
 
 
-#host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
-esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/twittertrend/_mapping'
+host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
+#esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
 #host='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
 #client = Elasticsearch([host])
 #print (client.info())
 #es = Elasticsearch(['http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/twittertrend'])
-# es = Elasticsearch(
-#     hosts=[{'host': host, 'port': 443}],
-#     use_ssl=True,
-#     verify_certs=True,
-#     connection_class=RequestsHttpConnection
-# ) 
-#print(es.info())
+es = Elasticsearch(
+    hosts=[{'host': host, 'port': 443}],
+    use_ssl=True,
+    verify_certs=True,
+    connection_class=RequestsHttpConnection
+) 
+print(es.info())
 
 
 
@@ -117,9 +117,9 @@ def home():
             tweet = js['Message']
             print type(tweet)
             #client.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
-            #es.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
+            es.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
             #r = requests.post(esurl, json=tweet)
-            r = requests.post(esurl, data=json.dumps(tweet))
+            #r = requests.post(esurl, data=json.dumps(tweet))
 
             print r
         # if socketConnected:
