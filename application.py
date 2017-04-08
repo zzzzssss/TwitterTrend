@@ -105,21 +105,21 @@ def home():
             # print "js:"
             # print js
             # print request.json
-        print js
+        #print js
 
         
         hdr=request.headers.get('x-amz-sns-message-type')
-        print hdr 
+        #print hdr 
         #print request.headers
         #print request.data
         #print request.data['SubscribeURL']
         #print type(request)
-        if hdr == 'SubscriptionConfirmation':
+        if hdr == 'SubscriptionConfirmation' and 'SubscribeURL' in js:
             r = requests.get(js['SubscribeURL'])
             #print request.data['SubscribeURL']
-        # if hdr == 'Notification':
-        #     tweet = request.data['Message']
-        #     print tweet
+        if hdr == 'Notification':
+            tweet = request.data['Message']
+            print tweet
         #     es.index(index="twittertrend", doc_type="tweets", id= tweet['id'], body= tweet)
         # if socketConnected:
         #         socketio.emit('realTimeResponse', tweet)
