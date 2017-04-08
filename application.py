@@ -15,7 +15,7 @@ socketConnected = False
 
 esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet'
 host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
-awsauth=AWS4Auth('AKIAJ4DLBU4HQGRC37FA', 'py3eHrRr1TQ0PzADrCzdAQsHtKtCnS0TcmA/lqwy', 'us-west-2', 's3')
+awsauth=AWS4Auth('AKIAJ4DLBU4HQGRC37FA', 'py3eHrRr1TQ0PzADrCzdAQsHtKtCnS0TcmA/lqwy', 'us-east-2', 's3')
 
 es = Elasticsearch(
     hosts=[{'host': host, 'port': 423}],
