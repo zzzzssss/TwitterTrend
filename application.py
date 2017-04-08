@@ -13,13 +13,14 @@ import json
 application = Flask(__name__)
 application.debug=True
 socketio = SocketIO(application)
+#es=Elasticsearch()
 
 #socketConnected = False
 
 #host='search-twitttrend-p3dwnc67tiu2brpgv3py5i4czq.us-west-2.es.amazonaws.com'
 
 #host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
-esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/twittertrend/_all/_mapping'
+#esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/twittertrend/_all/_mapping'
 #host='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
 #client = Elasticsearch([host])
 #print (client.info())
@@ -31,6 +32,7 @@ esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com
 #     connection_class=RequestsHttpConnection
 # ) 
 # print(es.info())
+es=Elasticsearch()
 
 
 
@@ -114,9 +116,9 @@ def home():
             tweet = js['Message']
             print tweet
             #client.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
-            #es.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
+            es.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
             #r = requests.post(esurl, json=tweet)
-            r = requests.post(esurl, data=json.dumps(tweet))
+            #r = requests.post(esurl, data=json.dumps(tweet))
 
             print r
         # if socketConnected:
