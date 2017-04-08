@@ -14,20 +14,20 @@ application = Flask(__name__)
 application.debug=True
 socketio = SocketIO(application)
 #es=Elasticsearch()
-host2='search-tweet-kzsnkupnrbvy6gdiw6vi4qwkaq.us-west-2.es.amazonaws.com'
+# host2='search-tweet-kzsnkupnrbvy6gdiw6vi4qwkaq.us-west-2.es.amazonaws.com'
 
-doc = {
-    'author': 'kimchy',
-    'text': 'Elasticsearch: cool. bonsai cool.',
-    #'timestamp': datetime.now(),
-}
+# doc = {
+#     'author': 'kimchy',
+#     'text': 'Elasticsearch: cool. bonsai cool.',
+#     #'timestamp': datetime.now(),
+# }
 
-es2 = Elasticsearch(
-    hosts=[{'host': host2, 'port': 443}],
-    use_ssl=True,
-    verify_certs=True,
-    connection_class=RequestsHttpConnection
-) 
+# es2 = Elasticsearch(
+#     hosts=[{'host': host2, 'port': 443}],
+#     use_ssl=True,
+#     verify_certs=True,
+#     connection_class=RequestsHttpConnection
+# ) 
 res = es2.index(index="test-index2", doc_type='tweet', id=1, body=doc)
 
 
@@ -36,7 +36,7 @@ res = es2.index(index="test-index2", doc_type='tweet', id=1, body=doc)
 #host='search-twitttrend-p3dwnc67tiu2brpgv3py5i4czq.us-west-2.es.amazonaws.com'
 
 #host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
-#esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/twittertrend/_all/_mapping'
+esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/twittertrend/_all/_mapping'
 #host='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
 #client = Elasticsearch([host])
 #print (client.info())
@@ -135,9 +135,9 @@ def home():
             #client.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
             #es.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
             #r = requests.post(esurl, json=tweet)
-            #r = requests.post(esurl, data=json.dumps(tweet))
+            r = requests.post(esurl, data=json.dumps(tweet))
 
-            #print r
+            print r.text
         # if socketConnected:
         #         socketio.emit('realTimeResponse', tweet)
 
