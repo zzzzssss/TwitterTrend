@@ -6,7 +6,7 @@ import random
 import math
 import requests
 import json
-
+from requests_aws4auth import AWS4auth
 # Elastic Beanstalk initalization
 application = Flask(__name__)
 #application.debug=True
@@ -14,13 +14,17 @@ socketio = SocketIO(application)
 socketConnected = False
 
 esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet'
-# es = Elasticsearch(
-#     hosts=[{'host': host, 'port': 423}],
-#     use_ssl=True,
-#     verify_certs=True,
-#     connection_class=RequestsHttpConnection
-# ) 
-# print(es.info())
+host=search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com
+awsauth=AWS4AUTH('AKIAJ4DLBU4HQGRC37FA', 'py3eHrRr1TQ0PzADrCzdAQsHtKtCnS0TcmA/lqwy', 'eu-west-2', 's3')
+
+es = Elasticsearch(
+    hosts=[{'host': host, 'port': 423}],
+    http_auth=awsauth,
+    use_ssl=True,
+    verify_certs=True,
+    connection_class=RequestsHttpConnection
+) 
+print(es.info())
 @application.route('/home', methods=['GET','POST'])
 def home():
 
