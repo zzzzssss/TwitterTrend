@@ -97,8 +97,8 @@ def home():
 
     if request.method == 'POST':
         try:
-            a=json.dumps(request.data)
-            js = json.loads(a)
+            a=json.loads(request.data)
+            js = json.dumps(a)
 
             #js= request.get_json(force=True)
             # print "js:"
