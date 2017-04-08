@@ -12,6 +12,7 @@ application = Flask(__name__)
 #application.debug=True
 socketio = SocketIO(application)
 socketConnected = False
+application.secret_key = 'cC1YCIWOj9GgWspgNEo2'  
 
 esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet'
 host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
