@@ -22,7 +22,7 @@ socketio = SocketIO(application)
 
 
 #host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
-esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/twittertrend'
+esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/twittertrend/tweets'
 #host='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
 #client = Elasticsearch([host])
 #print (client.info())
@@ -118,7 +118,7 @@ def home():
             print type(tweet)
             #client.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
             #es.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
-            r = requests.post(esurl, tweets=json.dumps(tweet, ensure_ascii=True))
+            r = requests.post(esurl, data=json.dumps(tweet, ensure_ascii=True))
             print r
         # if socketConnected:
         #         socketio.emit('realTimeResponse', tweet)
