@@ -114,11 +114,11 @@ def home():
 
     return render_template('home1.html', marker_list = [], count='')
 
-# @socketio.on('realTime')
-# def handle_my_custom_event(message):
-#     global socketConnected
-#     socketConnected = True
-#     print('received message:' + message)
+@socketio.on('realTime')
+def handle_my_custom_event(message):
+    global socketConnected
+    socketConnected = True
+    print('received message:' + message)
 
 
 if __name__ == '__main__':
