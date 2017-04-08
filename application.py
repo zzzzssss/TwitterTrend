@@ -14,7 +14,7 @@ import requests
 application = Flask(__name__)
 #application.debug=True
 socketio = SocketIO(application)
-socketConnected = False
+#socketConnected = False
 
 
 host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
@@ -102,11 +102,11 @@ def home():
             pass
         hdr=request.headers.get('x-amz-sns-message-type')
         print hdr
-        if hdr == 'SubscriptionConfirmation' and 'SubscribeURL' in js:
-            r = requests.get(js['SubscribeURL'])
-        if hdr == 'Notification':
-            tweet = js['Message']
-            print tweet
+        # if hdr == 'SubscriptionConfirmation' and 'SubscribeURL' in js:
+        #     r = requests.get(js['SubscribeURL'])
+        # if hdr == 'Notification':
+        #     tweet = js['Message']
+        #     print tweet
         #     es.index(index="twittertrend", doc_type="tweets", id= tweet['id'], body= tweet)
         # if socketConnected:
         #         socketio.emit('realTimeResponse', tweet)
@@ -114,11 +114,11 @@ def home():
 
     return render_template('home1.html', marker_list = [], count='')
 
-@socketio.on('realTime')
-def handle_my_custom_event(message):
-    global socketConnected
-    socketConnected = True
-    print('received message:' + message)
+# @socketio.on('realTime')
+# def handle_my_custom_event(message):
+#     global socketConnected
+#     socketConnected = True
+#     print('received message:' + message)
 
 
 if __name__ == '__main__':
