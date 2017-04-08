@@ -112,7 +112,7 @@ def sns():
                 socketio.emit('realTimeResponse', tweet_js)
 
 
-    #return render_template('home1.html', marker_list = [], count='')
+    return "ok"
 
 
 @socketio.on('realTime')
