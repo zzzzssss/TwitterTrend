@@ -29,7 +29,6 @@ es = Elasticsearch(
 
 
 
-'''
 @application.route('/', methods=['POST'])
 def map():    
 # creating a map in the view
@@ -90,7 +89,7 @@ def map():
     #print locationst[1][0]
     #print locationst[1][1]
     return render_template('home1.html', marker_list= locationst, count=number, selected=selected)
-'''
+
 
 @application.route('/', methods=['GET','POST'])
 def home():
