@@ -39,29 +39,16 @@ curl -XPUT search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/tw
 
 
 
+NEW INDEX
+doc={
+    "text": "#God has given you an ability unique to you alone. Walk in that\u2026 https://t.co/uQo9omf35k", 
+    "location": [-72.96151239, 41.29106458],
+     "user": "DvineExpression", 
+     "sentiment": "positive",
+      "time": "2017-04-08T19:03:01Z"
+      }
 
 
 
-curl -XPUT search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test -d '
-{
-        "tweets": {
-            
-                "user": {
-                    "type": "string",
-                    "index": "not_analyzed"
-                },
-                "time": {
-                    "type": "date"
-                },
-                "text": {
-                    "type": "string"
-                },
-                "location": {
-                    "type": "geo_point"
-                },
-                "sentiment": {
-                    "type": "string"
-                }
-            
-        }
-}'
+
+

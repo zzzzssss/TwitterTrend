@@ -7,48 +7,18 @@ import math
 import requests
 import json
 
-#from awses.connection import AWSConnection
-#from aws_requests_auth.aws_auth import AWSRequestsAuth
 # Elastic Beanstalk initalization
 application = Flask(__name__)
 application.debug=True
 socketio = SocketIO(application)
-#es=Elasticsearch()
-# host2='search-tweet-kzsnkupnrbvy6gdiw6vi4qwkaq.us-west-2.es.amazonaws.com'
 
-# doc = {
-#     'author': 'kimchy',
-#     'text': 'Elasticsearch: cool. bonsai cool.',
-#     #'timestamp': datetime.now(),
-# }
-
-# es2 = Elasticsearch(
-#     hosts=[{'host': host2, 'port': 443}],
-#     use_ssl=True,
-#     verify_certs=True,
-#     connection_class=RequestsHttpConnection
-# ) 
-#res = es2.index(index="test-index2", doc_type='tweet', id=1, body=doc)
-
-
-#socketConnected = False
-
-#host='search-twitttrend-p3dwnc67tiu2brpgv3py5i4czq.us-west-2.es.amazonaws.com'
-
-#host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
 esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet'
-#host='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
-#client = Elasticsearch([host])
-#print (client.info())
-#es = Elasticsearch(['http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/twittertrend/_all/_mapping'])
 # es = Elasticsearch(
 #     hosts=[{'host': host, 'port': 423}],
 #     use_ssl=True,
 #     verify_certs=True,
 #     connection_class=RequestsHttpConnection
 # ) 
-
-
 # print(es.info())
 
 
@@ -123,7 +93,6 @@ def home():
         
         js = json.loads(request.data)
 
-        
         hdr=request.headers.get('x-amz-sns-message-type')
         
         if hdr == 'SubscriptionConfirmation' and 'SubscribeURL' in js:
@@ -132,14 +101,10 @@ def home():
         if hdr == 'Notification':
             tweet_js = js['Message']
             print tweet_js
-            #client.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
-            #es.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
-            #r = requests.post(esurl, json=tweet)
             r = requests.post(esurl, data=tweet_js)
-
             print r.text
-        # if socketConnected:
-        #         socketio.emit('realTimeResponse', tweet)
+        if socketConnected:
+                socketio.emit('realTimeResponse', tweet)
 
 
     return render_template('home1.html', marker_list = [], count='')
