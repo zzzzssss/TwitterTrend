@@ -6,31 +6,34 @@ Uses Elastic Beanstalk
 from flask import Flask, render_template, request
 from flask_googlemaps import Map
 from flask_socketio import SocketIO, send, emit
-from elasticsearch import Elasticsearch, RequestsHttpConnection
+from elasticsearch import Elasticsearch, RequestsHttpConnection,Urllib3HttpConnection
 import random
 import math
 import requests
 import json
+#from awses.connection import AWSConnection
+#from aws_requests_auth.aws_auth import AWSRequestsAuth
 # Elastic Beanstalk initalization
 application = Flask(__name__)
-#application.debug=True
+application.debug=True
 socketio = SocketIO(application)
 
 #socketConnected = False
 
 
-#host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
+host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
 #esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/twittertrend/tweets'
-host='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
+#host='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
 #client = Elasticsearch([host])
-es = Elasticsearch([{'host': 'localhost', 'port': 5000}])
-# es = Elasticsearch(
-#     hosts=[{'host': host, 'port': 443}],
-#     use_ssl=True,
-#     verify_certs=True,
-#     #connection_class=RequestsHttpConnection
-# ) 
-# print(es.info())
+#print (client.info())
+#es = Elasticsearch([{'host': 'localhost', 'port': 5000}])
+es = Elasticsearch(
+    hosts=[{'host': host, 'port': 443}],
+    use_ssl=True,
+    verify_certs=True,
+    connection_class=Urllib3HttpConnection
+) 
+print(es.info())
 
 
 
@@ -113,11 +116,11 @@ def home():
         if hdr == 'Notification':
             tweet = js['Message']
             print tweet
-            #client.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
-            es.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
+            client.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
+            #es.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
             #r = requests.post(esurl, json = tweet)
-        if socketConnected:
-                socketio.emit('realTimeResponse', tweet)
+        # if socketConnected:
+        #         socketio.emit('realTimeResponse', tweet)
 
 
     return render_template('home1.html', marker_list = [], count='')
@@ -131,5 +134,4 @@ def handle_my_custom_event(message):
 
 if __name__ == '__main__':
     socketio.run(application, host='0.0.0.0')
-    #socketio.run(application, host="192.168.0.5",port=5010)
-    #http://192.168.0.5:5010/
+    
