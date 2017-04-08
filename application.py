@@ -94,6 +94,7 @@ es = Elasticsearch(
 @application.route('/', methods=['GET','POST'])
 def home():
     #global socketConnected
+    global js
     if request.method == 'POST':
         try:
             js = json.loads(request.data)
@@ -103,6 +104,8 @@ def home():
         hdr=request.headers.get('x-amz-sns-message-type')
         print hdr 
         print request.headers
+        print request.data
+        print type(request.data)
         if hdr == 'SubscriptionConfirmation' and 'SubscribeURL' in js:
             r = requests.get(js['SubscribeURL'])
             print js['SubscribeURL']
