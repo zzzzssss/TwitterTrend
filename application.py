@@ -111,7 +111,7 @@ def home():
             tweet = js['Message']
             print tweet
             #es.index(index="twittertrend", doc_type="tweets", body= tweet)
-            r = requests.post(host, json = tweet)
+            r = requests.post(host, tweets = tweet)
         if socketConnected:
                 socketio.emit('realTimeResponse', tweet)
 
