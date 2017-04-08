@@ -98,11 +98,11 @@ def home():
     if request.method == 'POST':
         try:
             js = json.loads(str(request.data))
-            js= request.get_json(force=True)
+            #js= request.get_json(force=True)
             # print "js:"
             # print js
             # print request.json
-            print jsonfy(request.data)
+            print js
 
         except:
             pass
