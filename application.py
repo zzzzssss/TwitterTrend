@@ -21,18 +21,18 @@ socketio = SocketIO(application)
 #socketConnected = False
 
 
-#host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
+host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
 #esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/twittertrend/tweets'
-host='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
+#host='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
 #client = Elasticsearch([host])
 #print (client.info())
-es = Elasticsearch(['http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com:443'])
-# es = Elasticsearch(
-#     hosts=[{'host': host, 'port': 443}],
-#     use_ssl=True,
-#     verify_certs=True,
-#     connection_class=Connection
-# ) 
+#es = Elasticsearch(['http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com:9200'])
+es = Elasticsearch(
+    hosts=[{'host': host, 'port': 443}],
+    use_ssl=True,
+    verify_certs=True,
+    connection_class=RequestsHttpConnection
+) 
 print(es.info())
 
 
