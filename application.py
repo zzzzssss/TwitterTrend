@@ -100,7 +100,7 @@ def home():
             print js
         except:
             pass
-        hdr=request.hearders.get('x-amz-sns-message-type')
+        hdr=request.headers.get('x-amz-sns-message-type')
         print hdr
         if hdr == 'SubscriptionConfirmation' and 'SubscribeURL' in js:
             r = requests.get(js['SubscribeURL'])
