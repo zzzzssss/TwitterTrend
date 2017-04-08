@@ -115,7 +115,7 @@ def home():
             
         if hdr == 'Notification':
             tweet = js['Message']
-            print tweet
+            print type(tweet)
             #client.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
             #es.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
             r = requests.post(esurl, data=json.dumps(tweet, ensure_ascii=True))
