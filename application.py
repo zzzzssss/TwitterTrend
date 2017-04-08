@@ -49,7 +49,7 @@ def map():
     print queryURL
     response = requests.get(queryURL)
     res = json.loads(response.text)
-    print res
+    print res['hits']['hits']
         
     #res = es.search(index="twittertrend", doc_type="tweets", q=selected, size=maxsize)
     locationst=[]
