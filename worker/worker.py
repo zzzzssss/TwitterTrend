@@ -32,7 +32,7 @@ def worker():
                 #     print tweet['sentiment'] 
                 #     #encoded = json.dumps(tweet, ensure_ascii=False)
                 #     # Publish to Amazon SNS
-                client.publish(TopicArn = topicArn, Message=json.dumps(tweet, ensure_ascii=False))
+                client.publish(TopicArn = topicArn, Message=json.dumps(tweet, ensure_ascii=True))
             #except:
                 #pass
 

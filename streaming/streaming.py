@@ -34,7 +34,7 @@ class MyStreamListener(tweepy.StreamListener):
                 'location': location,
                 'time': timestamp
                 }
-                encoded = json.dumps(tweet, ensure_ascii=False)
+                encoded = json.dumps(tweet, ensure_ascii=True)
                 queue.send_message(MessageBody=encoded)
 
         except Exception as e:
