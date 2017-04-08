@@ -17,7 +17,7 @@ es=Elasticsearch()
 doc = {
     'author': 'kimchy',
     'text': 'Elasticsearch: cool. bonsai cool.',
-    'timestamp': datetime.now(),
+    #'timestamp': datetime.now(),
 }
 res = es.index(index="test-index", doc_type='tweet', id=1, body=doc)
 
