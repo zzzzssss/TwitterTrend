@@ -1,8 +1,3 @@
-'''
-Simple Flask application to test deployment to Amazon Web Services
-Uses Elastic Beanstalk 
-
-'''
 from flask import Flask, render_template, request
 from flask_googlemaps import Map
 from flask_socketio import SocketIO, send, emit
@@ -11,6 +6,7 @@ import random
 import math
 import requests
 import json
+
 #from awses.connection import AWSConnection
 #from aws_requests_auth.aws_auth import AWSRequestsAuth
 # Elastic Beanstalk initalization
@@ -20,21 +16,21 @@ socketio = SocketIO(application)
 
 #socketConnected = False
 
-host='search-twitttrend-p3dwnc67tiu2brpgv3py5i4czq.us-west-2.es.amazonaws.com'
+#host='search-twitttrend-p3dwnc67tiu2brpgv3py5i4czq.us-west-2.es.amazonaws.com'
 
 #host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
-#esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
+esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/twittertrend/_all/_mapping'
 #host='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
 #client = Elasticsearch([host])
 #print (client.info())
-#es = Elasticsearch(['http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/twittertrend'])
-es = Elasticsearch(
-    hosts=[{'host': host, 'port': 5000}],
-    use_ssl=True,
-    verify_certs=True,
-    connection_class=RequestsHttpConnection
-) 
-print(es.info())
+#es = Elasticsearch(['http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/twittertrend/_all/_mapping'])
+# es = Elasticsearch(
+#     hosts=[{'host': host, 'port': 5000}],
+#     use_ssl=True,
+#     verify_certs=True,
+#     connection_class=RequestsHttpConnection
+# ) 
+# print(es.info())
 
 
 
@@ -116,11 +112,11 @@ def home():
             
         if hdr == 'Notification':
             tweet = js['Message']
-            print type(tweet)
+            print tweet
             #client.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
             #es.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
             #r = requests.post(esurl, json=tweet)
-            #r = requests.post(esurl, data=json.dumps(tweet))
+            r = requests.post(esurl, data=json.dumps(tweet))
 
             print r
         # if socketConnected:
