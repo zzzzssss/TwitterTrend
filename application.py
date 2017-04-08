@@ -94,7 +94,7 @@ es = Elasticsearch(
 @application.route('/', methods=['GET','POST'])
 def home():
     #global socketConnected
-    global js
+
     if request.method == 'POST':
         try:
             js = json.loads(request.data)
@@ -105,13 +105,13 @@ def home():
         print hdr 
         print request.headers
         print request.data
-        print type(request.data)
-        if hdr == 'SubscriptionConfirmation' and 'SubscribeURL' in js:
-            r = requests.get(js['SubscribeURL'])
-            print js['SubscribeURL']
-        # if hdr == 'Notification':
-        #     tweet = js['Message']
-        #     print tweet
+        print request.data[['SubscribeURL']]
+        if hdr == 'SubscriptionConfirmation' and 'SubscribeURL' in request.data:
+            r = requests.get(request.data['SubscribeURL'])
+            #print request.data['SubscribeURL']
+        if hdr == 'Notification':
+            tweet = request.data['Message']
+            print tweet
         #     es.index(index="twittertrend", doc_type="tweets", id= tweet['id'], body= tweet)
         # if socketConnected:
         #         socketio.emit('realTimeResponse', tweet)
