@@ -36,7 +36,7 @@ socketio = SocketIO(application)
 #host='search-twitttrend-p3dwnc67tiu2brpgv3py5i4czq.us-west-2.es.amazonaws.com'
 
 #host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
-esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/twittertrend/_all/_mapping'
+esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2'
 #host='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
 #client = Elasticsearch([host])
 #print (client.info())
@@ -130,12 +130,12 @@ def home():
             r = requests.get(js['SubscribeURL'])
             
         if hdr == 'Notification':
-            tweet = js['Message']
-            print tweet
+            tweet_js = js['Message']
+            print tweet_js
             #client.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
             #es.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
             #r = requests.post(esurl, json=tweet)
-            r = requests.post(esurl, data=tweet)
+            r = requests.post(esurl, tweet=tweet_js)
 
             print r.text
         # if socketConnected:
