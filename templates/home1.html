@@ -99,7 +99,12 @@
          console.log("Connected!");
         //socket.emit('my event', {data: 'I\'m connected!'});
     });
-    
+
+    socket.on('realTimeResponse', function(tweet) {
+
+            console.log("New Tweet");
+
+      });
     
 </script>
 

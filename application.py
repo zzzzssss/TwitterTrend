@@ -103,7 +103,7 @@ def home():
             tweet_js = js['Message']
             print tweet_js
             r = requests.post(esurl, data=tweet_js)
-            print r.text
+            #print r.text
         if socketConnected:
                 socketio.emit('realTimeResponse', tweet_js)
 
