@@ -135,7 +135,7 @@ def home():
             #client.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
             #es.index(index="twittertrend", doc_type="tweets", id=js['MessageId'], body= tweet)
             #r = requests.post(esurl, json=tweet)
-            r = requests.post(esurl, data=json.dumps(tweet))
+            r = requests.post(esurl, data=tweet)
 
             print r.text
         # if socketConnected:
