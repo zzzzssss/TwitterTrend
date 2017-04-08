@@ -26,12 +26,12 @@ def worker():
             try:
                 tweet = json.loads(message.body)   #tweet type:dict
                 print tweet
-                # response = alchemy_language.sentiment(text=tweet['text'])   #tweet['text']: unicode
-                # if response['status'] == 'OK':
-                #     tweet['sentiment'] = response['docSentiment']['type']
-                #     print tweet['sentiment'] 
-                #     #encoded = json.dumps(tweet, ensure_ascii=False)
-                #     # Publish to Amazon SNS
+                #response = alchemy_language.sentiment(text=tweet['text'])   #tweet['text']: unicode
+                #if response['status'] == 'OK':
+                tweet['sentiment'] = 'positive'
+                print tweet['sentiment'] 
+                    #encoded = json.dumps(tweet, ensure_ascii=False)
+                    # Publish to Amazon SNS
                 client.publish(TopicArn = topicArn, Message=json.dumps(tweet, ensure_ascii=True))
             #except:
                 #pass
