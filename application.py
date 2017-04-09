@@ -12,6 +12,7 @@ application = Flask(__name__)
 #application.debug=True
 socketio = SocketIO(application)
 socketConnected = False
+queryKeyWord = ''
 application.secret_key = 'cC1YCIWOj9GgWspgNEo2'  
 
 esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet'
@@ -127,6 +128,7 @@ host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
 @application.route('/',methods=['GET','POST'])
 def home():
     global socketConnected
+    global queryKeyWord
 
     if request.method == 'POST':
         
@@ -139,10 +141,10 @@ def home():
             
         if hdr == 'Notification':
             tweet_js = js['Message']
-            print type(tweet_js)
             r = requests.post(esurl, data=tweet_js)
-            #print r.text
-        if socketConnected:
+            print r.text
+            print type(r.text)
+        if socketConnected 
                 socketio.emit('realTimeResponse', tweet_js)
 
     return render_template('home1.html')
@@ -170,6 +172,8 @@ def home():
 @socketio.on('message')
 def handle_message(message):
     global socketConnected
+    global queryKeyWord
+
     if message == 'Init':
         # Run local elastic search
         #queryURL = 'elastic search endpoint'
