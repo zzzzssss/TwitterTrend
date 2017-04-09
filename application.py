@@ -146,7 +146,7 @@ def handle_my_custom_event(message):
         tweet = {'sentiment': result['_source']['sentiment'], 'location': result['_source']['location']}
         tweets.append(tweet)
 
-    send(json.dumps(tweets))
+    #send(json.dumps(tweets))
 
 
 if __name__ == '__main__':
