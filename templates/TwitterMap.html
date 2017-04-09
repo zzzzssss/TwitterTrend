@@ -119,10 +119,10 @@
 
             // Parse every tweet in tweetsJSON
             for (var x in tweetsJSON) {
-                var location = tweetJSON['location'];
+                var location = tweetJSON[x]['location'];
                 //var longitude = parseFloat((tweetsJSON[x]['longitude']));
                 //var latitude = parseFloat((tweetsJSON[x]['latitude']));
-                var sentiment = tweetJSON['sentiment'];
+                var sentiment = tweetJSON[x]['sentiment'];
                 
 
                 var icon;
