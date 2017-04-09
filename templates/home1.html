@@ -79,7 +79,7 @@
     var socket;
     var interval;
     var timeInterval = 5000;
-
+    var googleMarkers = [];
     function initMap() {
 
         // Init google map
@@ -90,7 +90,7 @@
         });
 
         // An array to store all markers
-        var googleMarkers = [];
+        
 
         // Establish socket connection
         //socket = io.connect('http://' + document.domain + ':' + location.port);
@@ -99,6 +99,9 @@
 
 
         socket.on('connect', function(){
+            socket.emit('realTime', "CONNECTED");
+            console.log("Connected!");
+        
             setUpMap();
             console.log('Init');
         });
