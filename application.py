@@ -144,7 +144,7 @@ def home():
             r = requests.post(esurl, data=tweet_js)
             print r.text
             print type(r.text)
-        if socketConnected 
+        if socketConnected: 
                 socketio.emit('realTimeResponse', tweet_js)
 
     return render_template('home1.html')
