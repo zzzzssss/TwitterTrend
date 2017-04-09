@@ -185,7 +185,7 @@ def handle_message(message):
         queryURL = 'elastic search endpoint'
         # queryURL = 'http://localhost:9201/tweetmap/_search?q=' + queryKeyWord + '&size=1000'
         queryURL = 'http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet/_search?q='
-        queryURL=queryURL+queryKeyWord+'&size=25'
+        queryURL=queryURL+queryKeyWord+'&size=1000'
         response = requests.get(queryURL)
         results = json.loads(response.text)
         print("SEARCH " + str(message))
