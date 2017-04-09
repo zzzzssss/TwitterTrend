@@ -191,8 +191,8 @@ def handle_message(message):
 
         print("INIT MAP")
     else:
-        socketConnected = True
         queryKeyWord = message.replace(' ', '%20')
+        socketConnected = True
         queryURL = 'elastic search endpoint'
         # queryURL = 'http://localhost:9201/tweetmap/_search?q=' + queryKeyWord + '&size=1000'
         queryURL = 'http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet/_search?q='
