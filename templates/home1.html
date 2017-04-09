@@ -42,7 +42,7 @@
             </button>
             <a class="navbar-brand" href="/">TweetTrend</a>
         </div>
-            <a class="navbar-brand" > keyword: {{selected}}</a>
+            
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="/">Reload</a></li>
@@ -50,6 +50,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">Please select keyword <span class="caret"></span></a>
                     <ul class="dropdown-menu">
+                        <li><a href="javascript: queryKeyWord('');">Clear Search</a></li>
                         <li><a href="javascript: queryKeyWord('Restaurant');">Restaurant</a></li>
                         <li><a href="javascript: queryKeyWord('Basketball');">Basketball</a></li>
                         <li><a href="javascript: queryKeyWord('Weather');">Weather</a></li>
@@ -69,8 +70,9 @@
                 <button type="button" class="btn btn-default" id="searchButton">Search</button>
             </form>
             
-  
+            <a class="navbar-brand" > keyword: {{selected}}</a>
         </div>
+
     </div>
 </nav>
 
@@ -78,11 +80,9 @@
 <div id="map"></div>
 
 <script>
-    // Create socket
     var socket;
     // var interval;
     // var timeInterval = 5000;
-    
     function initMap() {
 
         // Init google map
@@ -97,7 +97,6 @@
 
         // Establish socket connection
         //socket = io.connect('http://' + document.domain + ':' + location.port);
-
         socket = io.connect(null, {port: location.port, rememberTransport:false});
 
         socket.on('connect', function(){
@@ -128,7 +127,6 @@
                 icon: icon,
                 map: map
             });
-
             // Add markers to the array
             googleMarkers.push(marker);
         });
@@ -195,7 +193,7 @@
     };
 
 
-    // Function used to clear all markers
+    // clear all markers
     function clearMarkers(googleMarkers){
         for(var i = 0; i < googleMarkers.length; i++){
             googleMarkers[i].setMap(null);
@@ -203,18 +201,16 @@
         googleMarkers.length = 0;
     }
 
-
-    // Function used to send socket message
+    // send socket message
     function sendSocketMessage(message){
         socket.send(message);
         console.log("Message Sent");
     }
 
-    // Function handling the search
+    // handling the search
     $('#searchButton').on('click', function(){
         // clearInterval(interval);
         var keyWord = $('#keyword').val();
-
         sendSocketMessage(keyWord);
         // interval = setInterval(sendSocketMessage, timeInterval, keyWord);
     });
