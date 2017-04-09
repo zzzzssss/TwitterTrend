@@ -99,11 +99,6 @@ awsauth=AWS4Auth('AKIAJ4DLBU4HQGRC37FA', 'py3eHrRr1TQ0PzADrCzdAQsHtKtCnS0TcmA/lq
 #     return render_template('home1.html', marker_list= locationst, count=number, selected=selected)
     
 
-@application.route('/home')
-def home():
-
-    return render_template('home1.html')
-
 
 @application.route('/', methods=['GET','POST'])
 def sns():
@@ -128,6 +123,11 @@ def sns():
 
 
     return render_template('TwitterMap.html')
+
+@application.route('/home')
+def home():
+
+    return render_template('home1.html')
 
 
 @socketio.on('realTime')
