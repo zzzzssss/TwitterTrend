@@ -141,16 +141,19 @@ def home():
             
         if hdr == 'Notification':
             tweet_js = js['Message']
-            # print js['Message']
-            # print type(js['Message'])
+
             a=json.loads(js['Message'])
             print a['text']
-            b='Trump' in a['text'] 
-            print b
+            
             r = requests.post(esurl, data=tweet_js)
             
-        if socketConnected and queryKeyWord in a['text']: 
-                print "filter queryKeyWord backend"
+        # if socketConnected and queryKeyWord in a['text']: 
+        #         print "filter queryKeyWord backend"
+        #         print queryKeyWord
+        #         socketio.emit('realTimeResponse', tweet_js)
+
+        if socketConnected: 
+                print "filter without queryKeyWord backend"
                 print queryKeyWord
                 socketio.emit('realTimeResponse', tweet_js)
 
