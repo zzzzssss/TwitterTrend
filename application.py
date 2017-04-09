@@ -124,7 +124,7 @@ host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
 
 #     return render_template('TwitterMap.html')
 
-@application.route('/home',, methods=['GET','POST'])
+@application.route('/home',methods=['GET','POST'])
 def home():
     global socketConnected
 
