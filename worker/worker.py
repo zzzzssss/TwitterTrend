@@ -2,6 +2,7 @@ import json
 import boto3
 from multiprocessing import Pool
 from watson_developer_cloud import AlchemyLanguageV1
+import random
 
 
 alchemy_language = AlchemyLanguageV1(api_key='3946e2353ef5132f59f5fc47536fb8ac67882707')
@@ -30,7 +31,8 @@ def worker():
                 print tweet
                 #response = alchemy_language.sentiment(text=tweet['text'])   #tweet['text']: unicode
                 #if response['status'] == 'OK':
-                tweet['sentiment'] = 'positive'
+                emotional=['positive','negative','neutral']
+                tweet['sentiment'] = random.choice(emotional)
                 print tweet['sentiment'] 
                     #encoded = json.dumps(tweet, ensure_ascii=False)
                     # Publish to Amazon SNS
