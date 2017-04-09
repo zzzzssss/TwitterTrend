@@ -148,7 +148,7 @@ def handle_realtime_event(message):
     #     #print result['_source']['location']
     #     tweets.append(tweet)
 
-    send(json.dumps(tweets))
+    # send(json.dumps(tweets))
 @socketio.on('message')
 def handle_message(message):
     if message == 'Init':
