@@ -174,8 +174,9 @@ def handle_message(message):
     tweets = []
     for result in results['hits']['hits']:
         tweet = {'sentiment': result['_source']['sentiment'], 'location': result['_source']['location']}
-        print len(result['_source']['location']) 
+        
         tweets.append(tweet)
+    print len(tweets) 
 
     send(json.dumps(tweets))
 
