@@ -16,3 +16,6 @@ Shuyang Zhao   uni:sz2631      Yanan Zhang  uni: yz3054
 * `cd` into `worker`
 * Run `pip install -r requirements.txt` to install the needed packages
 * Run `python worker.py`
+
+##Link
+http://54.202.67.200:5000/
