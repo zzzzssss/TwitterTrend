@@ -83,14 +83,12 @@
         });
 
         socket.on('realTimeResponse', function(tweet) {
-
             console.log("New Tweet");
-            // Parse JSON
             var tweetJSON = JSON.parse(tweet);
-
-            var longitude = parseFloat((tweetJSON['longitude']));
-            var latitude = parseFloat((tweetJSON['latitude']));
+            var location = tweetJSON['location'];
             var sentiment = tweetJSON['sentiment'];
+            console.log("got location and setiment");
+
 
             var icon;
             if (sentiment == 'positive') {
@@ -101,7 +99,7 @@
                 icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
             }
 
-            var markerPosition = {lat: latitude, lng: longitude};
+            var markerPosition = {lat: ['location'][0], lng: ['location'][1]};
 
             var marker = new google.maps.Marker({
                 position: markerPosition,
@@ -120,9 +118,10 @@
 
             // Parse every tweet in tweetsJSON
             for (var x in tweetsJSON) {
-                var longitude = parseFloat((tweetsJSON[x]['longitude']));
-                var latitude = parseFloat((tweetsJSON[x]['latitude']));
-                var sentiment = (tweetsJSON[x]['sentiment']);
+                var location = tweetJSON['location'];
+                //var longitude = parseFloat((tweetsJSON[x]['longitude']));
+                //var latitude = parseFloat((tweetsJSON[x]['latitude']));
+                var sentiment = tweetJSON['sentiment'];
 
                 var icon;
                 // Change color based on sentiment
@@ -134,7 +133,7 @@
                     icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
                 }
 
-                var markerPosition = {lat: latitude, lng: longitude};
+                var markerPosition = {lat: ['location'][0], lng: ['location'][1]};
 
                 var marker = new google.maps.Marker({
                     position: markerPosition,
