@@ -135,18 +135,18 @@ def handle_my_custom_event(message):
     global socketConnected
     socketConnected = True
     print('received message:' + message)
-    # Fetch tweets in elastic search
-    # queryURL = 'http://localhost:9201/tweetmap/_search?q=*:*&size=1000'
-    # queryURL = 'http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet/_search?q=*:*&size=100'
-    # response = requests.get(queryURL)
-    # results = json.loads(response.text)
+    #Fetch tweets in elastic search
+    #queryURL = 'http://localhost:9201/tweetmap/_search?q=*:*&size=1000'
+    queryURL = 'http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet/_search?q=*:*&size=100'
+    response = requests.get(queryURL)
+    results = json.loads(response.text)
 
-    # tweets = []
-    # for result in results['hits']['hits']:
-    #     tweet = {'sentiment': result['_source']['sentiment'], 'location': result['_source']['location']}
-    #     tweets.append(tweet)
+    tweets = []
+    for result in results['hits']['hits']:
+        tweet = {'sentiment': result['_source']['sentiment'], 'location': result['_source']['location']}
+        tweets.append(tweet)
 
-    # send(json.dumps(tweets))
+    send(json.dumps(tweets))
 @socketio.on('message')
 def handle_message(message):
     if message == 'Init':
