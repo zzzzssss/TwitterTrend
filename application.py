@@ -143,8 +143,9 @@ def home():
             tweet_js = js['Message']
             # print js['Message']
             # print type(js['Message'])
-            print js['Message'][0]
-            print type(js['Message'][0])
+            a=json.loads(js['Message'])
+            print a['text']
+            print type(a['text'])
             r = requests.post(esurl, data=tweet_js)
             
         if socketConnected: 
