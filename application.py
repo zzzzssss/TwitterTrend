@@ -16,7 +16,7 @@ application.secret_key = 'cC1YCIWOj9GgWspgNEo2'
 
 esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet'
 host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
-awsauth=AWS4Auth('AKIAJ4DLBU4HQGRC37FA', 'py3eHrRr1TQ0PzADrCzdAQsHtKtCnS0TcmA/lqwy', 'us-west-2', 'es')
+#awsauth=AWS4Auth('AKIAJ4DLBU4HQGRC37FA', 'py3eHrRr1TQ0PzADrCzdAQsHtKtCnS0TcmA/lqwy', 'us-west-2', 'es')
 
 # es = Elasticsearch(
 #     hosts=[{'host': host, 'port': 423}],
@@ -100,8 +100,32 @@ awsauth=AWS4Auth('AKIAJ4DLBU4HQGRC37FA', 'py3eHrRr1TQ0PzADrCzdAQsHtKtCnS0TcmA/lq
     
 
 
-@application.route('/', methods=['GET','POST'])
-def sns():
+# @application.route('/', methods=['GET','POST'])
+# def sns():
+#     global socketConnected
+
+#     if request.method == 'POST':
+        
+#         js = json.loads(request.data)
+
+#         hdr=request.headers.get('x-amz-sns-message-type')
+        
+#         if hdr == 'SubscriptionConfirmation' and 'SubscribeURL' in js:
+#             r = requests.get(js['SubscribeURL'])
+            
+#         if hdr == 'Notification':
+#             tweet_js = js['Message']
+#             print type(tweet_js)
+#             r = requests.post(esurl, data=tweet_js)
+#             #print r.text
+#         if socketConnected:
+#                 socketio.emit('realTimeResponse', tweet_js)
+
+
+#     return render_template('TwitterMap.html')
+
+@application.route('/home',, methods=['GET','POST'])
+def home():
     global socketConnected
 
     if request.method == 'POST':
@@ -121,36 +145,31 @@ def sns():
         if socketConnected:
                 socketio.emit('realTimeResponse', tweet_js)
 
-
-    return render_template('TwitterMap.html')
-
-@application.route('/home')
-def home():
-
     return render_template('home1.html')
 
 
-@socketio.on('realTime')
-def handle_realtime_event(message):
-    global socketConnected
-    socketConnected = True
-    print('received message:' + message)
-    #Fetch tweets in elastic search
-    #queryURL = 'http://localhost:9201/tweetmap/_search?q=*:*&size=1000'
-    queryURL = 'http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet/_search?q=*:*&size=10'
-    response = requests.get(queryURL)
-    results = json.loads(response.text)
+# @socketio.on('realTime')
+# def handle_realtime_event(message):
+#     global socketConnected
+#     socketConnected = True
+#     print('received message:' + message)
+#     #Fetch tweets in elastic search
+#     #queryURL = 'http://localhost:9201/tweetmap/_search?q=*:*&size=1000'
+#     queryURL = 'http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet/_search?q=*:*&size=10'
+#     response = requests.get(queryURL)
+#     results = json.loads(response.text)
 
-    tweets = []
-    print len(results['hits']['hits'])
-    for result in results['hits']['hits']:
-        tweet = {'sentiment': result['_source']['sentiment'], 'location': result['_source']['location']}
-        #print result['_source']['location']
-        tweets.append(tweet)
+#     tweets = []
+#     print len(results['hits']['hits'])
+#     for result in results['hits']['hits']:
+#         tweet = {'sentiment': result['_source']['sentiment'], 'location': result['_source']['location']}
+#         #print result['_source']['location']
+#         tweets.append(tweet)
 
-    send(json.dumps(tweets))
+#     send(json.dumps(tweets))
 @socketio.on('message')
 def handle_message(message):
+    global socketConnected
     if message == 'Init':
         # Run local elastic search
         #queryURL = 'elastic search endpoint'
@@ -161,6 +180,7 @@ def handle_message(message):
 
         print("INIT MAP")
     else:
+        socketConnected = True
         queryKeyWord = message.replace(' ', '%20')
         queryURL = 'elastic search endpoint'
         # queryURL = 'http://localhost:9201/tweetmap/_search?q=' + queryKeyWord + '&size=1000'

@@ -98,8 +98,36 @@
         socket = io.connect(null, {port: location.port, rememberTransport:false});
 
         socket.on('connect', function(){
-            setUpMap();
+            // setUpMap();
             console.log('Init');
+        });
+        socket.on('realTimeResponse', function(tweet) {
+            console.log("New Tweet");
+            var tweetJSON = JSON.parse(tweet);
+            var location = tweetJSON['location'];
+            var sentiment = tweetJSON['sentiment'];
+            console.log("got location and setiment");
+
+
+            var icon;
+            if (sentiment == 'positive') {
+                icon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+            } else if (sentiment == 'negative') {
+                icon = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+            } else {
+                icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+            }
+
+            var markerPosition = {lat: location[1], lng: location[0]};
+
+            var marker = new google.maps.Marker({
+                position: markerPosition,
+                icon: icon,
+                map: map
+            });
+
+            // Add markers to the array
+            googleMarkers.push(marker);
         });
 
 
@@ -146,20 +174,21 @@
           }
 
     // Function used to set up the map
-    function setUpMap(){
-        clearInterval(interval);
-        sendSocketMessage("Init");
-        interval = setInterval(sendSocketMessage, timeInterval, "Init");
-    };
+    // function setUpMap(){
+    //     clearInterval(interval);
+    //     sendSocketMessage("Init");
+    //     interval = setInterval(sendSocketMessage, timeInterval, "Init");
+    // };
 
     // Send key selected key word to back end, using it to search for tweets
     function queryKeyWord(selectedWord){
         console.log(selectedWord);
 
-        clearInterval(interval);
+        // clearInterval(interval);
 
         sendSocketMessage(selectedWord);
-        interval = setInterval(sendSocketMessage, timeInterval, selectedWord);
+        
+        // interval = setInterval(sendSocketMessage, timeInterval, selectedWord);
     };
 
 
