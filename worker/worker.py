@@ -15,6 +15,7 @@ queue = sqs.get_queue_by_name(QueueName='TwitterTrend')
 client = boto3.client('sns')
 response = client.create_topic(Name = 'tweets')
 topicArn = response['TopicArn']
+subscribeResponse = client.subscribe(TopicArn = topicArn, Protocol = 'http', Endpoint = 'twitterTrend-dev.us-west-2.elasticbeanstalk.com')
 #subscribeResponse = client.subscribe(TopicArn = topicArn, Protocol = 'http', Endpoint = 'http://54.202.67.200:5000/')
 #subscribeResponse = client.subscribe(TopicArn = topicArn, Protocol = 'http', Endpoint = 'http://52.26.22.105:5000/')
 
