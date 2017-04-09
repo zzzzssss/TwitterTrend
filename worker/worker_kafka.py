@@ -1,57 +1,56 @@
-from kafka import KafkaConsumer
 import json
 import boto3
+from multiprocessing import Pool
 from watson_developer_cloud import AlchemyLanguageV1
-from threading import Thread
+from kafka import KafkaConsumer
+import random
 
 
-class Worker(Thread):
-    def __init__(self, message):
-        Thread.__init__(self)
-        self.message = message
+alchemy_language = AlchemyLanguageV1(api_key='3946e2353ef5132f59f5fc47536fb8ac67882707')
+
+consumer = KafkaConsumer('tweet', group_id = 'tweet-stream', bootstrap_servers = ['localhost:9092'], value_deserializer = lambda m: json.loads(m.decode('utf-8')))
 
 
-    def run(self):
-        message = self.message
-        tweet = {'text': message.value['text'], 'user': message.value['user'],
-             'time': message.value['time'], 'longitude': message.value['location'][0],
-             'latitude': message.value['location'][1]}
+# sqs = boto3.resource('sqs')
+# queue = sqs.get_queue_by_name(QueueName='TwitterTrend')
 
-        try:
-            response = alchemy_language.sentiment(text = tweet['text'])
-            tweet['sentiment'] = response['docSentiment']['type']
-        except:
-            pass
 
-        # Publish result
-        publishResponse = client.publish(TopicArn = topicArn, Message = json.dumps(tweet))
+client = boto3.client('sns')
+response = client.create_topic(Name = 'tweets')
+topicArn = response['TopicArn']
+subscribeResponse = client.subscribe(TopicArn = topicArn, Protocol = 'http', Endpoint = 'http://lowcost-env.mg2pfegsvr.us-west-2.elasticbeanstalk.com/')
+#subscribeResponse = client.subscribe(TopicArn = topicArn, Protocol = 'http', Endpoint = 'http://54.202.67.200:5000/')
+#subscribeResponse = client.subscribe(TopicArn = topicArn, Protocol = 'http', Endpoint = 'http://52.26.22.105:5000/')
 
-class WorkerPool(Thread):
-    def __init__(self):
-        Thread.__init__(self)
+#sns = boto3.resource('sns')
+#IMPORTANT: sns and aws region needs to be the same: here both are us-west-2 Oregon
+#topic = sns.Topic('arn:aws:sns:us-west-2:217770466492:TwitterSentiment') 
 
-    def run(self):
-        for message in consumer:
-            worker = Worker(message)
-            worker.start()
 
+def worker():
+    while True:
+        for message in consumer: #message.body type: unicode
+            try:
+                tweet = json.loads(message.body)   #tweet type:dict
+                #print tweet
+                #response = alchemy_language.sentiment(text=tweet['text'])   #tweet['text']: unicode
+                #if response['status'] == 'OK':
+                emotional=['positive','negative','neutral']
+                tweet['sentiment'] = random.choice(emotional)
+                print tweet['sentiment'] 
+                    # Publish to Amazon SNS
+                client.publish(TopicArn = topicArn, Message=json.dumps(tweet, ensure_ascii=True))
+            #except:
+                #pass
+
+            finally:
+                message.delete()
 
 if __name__ == '__main__':
-    # Get AWS SNS 
-    client = boto3.client('sns')
-    response = client.create_topic(Name = 'tweets')
-    topicArn = response['TopicArn']
+    worker()
+     #pool = Pool(3)
+     #pool.map(worker, range(3))
 
-    # Subscribe
-    subscribeResponse = client.subscribe(TopicArn = topicArn, Protocol = 'http', Endpoint = 'http://flask-env.pj5s5sxjmc.us-west-2.elasticbeanstalk.com/')
-
-    # Get alchemy language 
-    alchemy_language = AlchemyLanguageV1(api_key='3946e2353ef5132f59f5fc47536fb8ac67882707')
-
-    consumer = KafkaConsumer('tweet', group_id = 'tweet-stream', bootstrap_servers = ['localhost:9092'], value_deserializer = lambda m: json.loads(m.decode('utf-8')))
-
-    pool = WorkerPool()
-    pool.start()
 
 
 
