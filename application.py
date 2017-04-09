@@ -6,7 +6,7 @@ import random
 import math
 import requests
 import json
-from requests_aws4auth import AWS4Auth
+#from requests_aws4auth import AWS4Auth
 application = Flask(__name__)
 #application.debug=True
 socketio = SocketIO(application)

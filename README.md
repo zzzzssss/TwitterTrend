@@ -1,6 +1,6 @@
 # TwittTrend
-Assignment 2 for COMS E6998 Cloud Computing and Big Data
-Shuyang Zhao   uni:sz2631      Yanan Zhang  uni: yz3054
+* Assignment 2 for COMS E6998 Cloud Computing and Big Data
+* Shuyang Zhao   uni:sz2631      Yanan Zhang  uni: yz3054
 
 ## Step 1: Setting Up Amazon Elasticsearch
 
@@ -17,5 +17,5 @@ Shuyang Zhao   uni:sz2631      Yanan Zhang  uni: yz3054
 * Run `pip install -r requirements.txt` to install the needed packages
 * Run `python worker.py`
 
-##Link
-http://54.202.67.200:5000/
+## Link
+http://lowcost-env.mg2pfegsvr.us-west-2.elasticbeanstalk.com/
