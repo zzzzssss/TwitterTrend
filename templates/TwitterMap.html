@@ -112,6 +112,7 @@
         });
 
         socket.on('message', function(tweets){
+            console.log("New Tweet:message");
 
             // Parse JSON
             var tweetsJSON = JSON.parse(tweets)
