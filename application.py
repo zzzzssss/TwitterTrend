@@ -120,7 +120,7 @@ def sns():
             
         if hdr == 'Notification':
             tweet_js = js['Message']
-            print "got tweets"
+            print type(tweet_js)
             r = requests.post(esurl, data=tweet_js)
             #print r.text
         if socketConnected:
