@@ -122,7 +122,7 @@ def sns():
                 socketio.emit('realTimeResponse', tweet_js)
 
 
-    return render_template('TwitterMap.html')
+    return render_template('home1.html')
 
 @application.route('/home')
 def home():
