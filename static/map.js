@@ -7,32 +7,9 @@ var infowindow = null;
 var map = null;
 
 var xmlhttp = new XMLHttpRequest();
-
-/*
- * Listen to the http request 
- */
-xmlhttp.onreadystatechange = function() {
-  if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-    var text = JSON.parse(xmlhttp.responseText); 
-    if (text['pattern'] == "global") {
-      var locs = text['tweets'];
-      var arr = heatmap.getData();
-      for (var i = 0; i < locs.length; ++i) {
-          var loc = new google.maps.LatLng(parseInt(locs[i][1]), parseInt(locs[i][0]));
-        arr.push(loc);
-      }
-    } else {
-      var tweets = text['tweets'];
-      var content = "";
-      for (var i = 0; i < tweets.length; ++i) {
-        content += ("<p>" + tweets[i] + "</p>")
-      }
-      infowindow.setContent(content);
-        infowindow.open(map, marker);
-    }
-  }
-};
-
+var socket;
+var interval;
+var timeInterval = 5000;
 
 
 function initMap(markers){
@@ -112,71 +89,3 @@ function initMap(markers){
 
 
 
-/* 
- * Change the keyword of dropdown
- */
-$(".dropdown").on("click", "li a", function() {
-  keyword = $(this).text();
-  $(".dropdown-toggle").html(keyword + ' <span class="caret"></span>');
-}); 
-
-
-$(".dropdown2").on("click", "li a", function() {
-  keyword = $(this).text();
-  $(".dropdown-toggle").html(keyword + ' <span class="caret"></span>');
-}); 
-
-
-/* 
- * Initilize two datetimepickers
- */
-$('#datetimepicker1').datetimepicker();
-$('#datetimepicker2').datetimepicker();
-
-/*
- * When clicking the sumbit button, send a POST request
- */
-$("button").on("click", function() {
-  sendHttp("global");
-});
-
-function sendHttp(pattern) {
-
-  /*
-   * Remind the user to pick a location and a keyword
-   */
-  if (keyword == null) {
-    alert("Please pick a keyword");
-    return;
-  }
-
-  /* 
-   * Get the begin date and end date 
-   */
-  var beginDate = $("#datetimepicker1 input").val().split("/").join("-").split(" ").join("+");
-  var endDate = $("#datetimepicker2 input").val().split("/").join("-").split(" ").join("+");
-  if (beginDate == "" || endDate == "") {
-    alert("Please pick the begin date and end date");
-    return;
-  }
-
-  if (pattern == "global") {
-    /*
-     * Clear the previous data
-     */
-    var arr = heatmap.getData();
-    while (arr.length > 0)
-      arr.pop();
-
-    /*
-     * HTTP request sent
-     */
-    xmlhttp.open("POST", "/global?kw=" + keyword + "&start=" + beginDate + "&end=" + endDate, true);
-    xmlhttp.send();
-
-  } else {
-    // xmlhttp.open("POST", "/local?kw=" + keyword + "&start=" + beginDate + "&end=" + endDate, true);
-    xmlhttp.open("POST", "/local?kw=" + keyword + "&start=" + beginDate + "&end=" + endDate + "&lat=" + lng + "&lon=" + lat, true);
-    xmlhttp.send();
-  }
-}

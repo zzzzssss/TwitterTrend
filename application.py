@@ -29,7 +29,6 @@ awsauth=AWS4Auth('AKIAJ4DLBU4HQGRC37FA', 'py3eHrRr1TQ0PzADrCzdAQsHtKtCnS0TcmA/lq
 
 
 
-
 @application.route('/home', methods=['POST'])
 def map():    
 #creating a map in the view
@@ -98,7 +97,7 @@ def map():
     #print locationst[1][0]
     #print locationst[1][1]
     return render_template('home1.html', marker_list= locationst, count=number, selected=selected)
-    #return render_template('home1.html', marker_list= locationst, count=number, selected=selected)
+    
 
 @application.route('/home', methods=['GET','POST'])
 def home():
@@ -128,7 +127,7 @@ def sns():
                 socketio.emit('realTimeResponse', tweet_js)
 
 
-    return "ok"
+    return render_template('TwitterMap.html')
 
 
 @socketio.on('realTime')
