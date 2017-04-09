@@ -99,7 +99,7 @@
                 icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
             }
 
-            var markerPosition = {lat: location[0], lng: location[1]};
+            var markerPosition = {lat: location[1], lng: location[0]};
 
             var marker = new google.maps.Marker({
                 position: markerPosition,
@@ -122,6 +122,7 @@
                 //var longitude = parseFloat((tweetsJSON[x]['longitude']));
                 //var latitude = parseFloat((tweetsJSON[x]['latitude']));
                 var sentiment = tweetJSON['sentiment'];
+                console.log("Initmap:got location and setiment");
 
                 var icon;
                 // Change color based on sentiment
@@ -133,7 +134,7 @@
                     icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
                 }
 
-                var markerPosition = {lat: location[0], lng: location[1]};
+                var markerPosition = {lat: location[1], lng: location[0]};
 
                 var marker = new google.maps.Marker({
                     position: markerPosition,
