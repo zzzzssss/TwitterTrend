@@ -153,7 +153,7 @@ def handle_message(message):
         # Run local elastic search
         #queryURL = 'elastic search endpoint'
         # queryURL = 'http://localhost:9201/tweetmap/_search?q=*:*&size=1000'
-        queryURL = 'http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet/_search?q=*:*&size=10'
+        queryURL = 'http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet/_search?q=*:*&size=0'
         response = requests.get(queryURL)
         results = json.loads(response.text)
 
@@ -163,10 +163,10 @@ def handle_message(message):
         queryURL = 'elastic search endpoint'
         # queryURL = 'http://localhost:9201/tweetmap/_search?q=' + queryKeyWord + '&size=1000'
         queryURL = 'http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet/_search?q='
-        queryURL=queryURL+queryKeyWord+'&size=10'
+        queryURL=queryURL+queryKeyWord+'&size=100'
         response = requests.get(queryURL)
         results = json.loads(response.text)
-        print("SEARCH" + str(message))
+        print("SEARCH " + str(message))
 
     # Find locations of each tweet
     tweets = []
