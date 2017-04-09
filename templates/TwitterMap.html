@@ -111,43 +111,43 @@
             googleMarkers.push(marker);
         });
 
-    //     socket.on('message', function(tweets){
-    //         console.log("New Tweet:message");
+        socket.on('message', function(tweets){
+            console.log("New Tweet:message");
 
-    //         // Parse JSON
-    //         var tweetsJSON = JSON.parse(tweets)
+            // Parse JSON
+            var tweetsJSON = JSON.parse(tweets)
 
-    //         // Parse every tweet in tweetsJSON
-    //         for (var x in tweetsJSON) {
-    //             var location = tweetJSON['location'];
-    //             //var longitude = parseFloat((tweetsJSON[x]['longitude']));
-    //             //var latitude = parseFloat((tweetsJSON[x]['latitude']));
-    //             var sentiment = tweetJSON['sentiment'];
+            // Parse every tweet in tweetsJSON
+            for (var x in tweetsJSON) {
+                var location = tweetJSON['location'];
+                //var longitude = parseFloat((tweetsJSON[x]['longitude']));
+                //var latitude = parseFloat((tweetsJSON[x]['latitude']));
+                var sentiment = tweetJSON['sentiment'];
                 
 
-    //             var icon;
-    //             // Change color based on sentiment
-    //             if (sentiment == 'positive') {
-    //                 icon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
-    //             } else if (sentiment == 'negative') {
-    //                 icon = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
-    //             } else {
-    //                 icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
-    //             }
+                var icon;
+                // Change color based on sentiment
+                if (sentiment == 'positive') {
+                    icon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+                } else if (sentiment == 'negative') {
+                    icon = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+                } else {
+                    icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+                }
 
-    //             var markerPosition = {lat: location[1], lng: location[0]};
+                var markerPosition = {lat: location[1], lng: location[0]};
 
-    //             var marker = new google.maps.Marker({
-    //                 position: markerPosition,
-    //                 icon: icon,
-    //                 map: map
-    //             });
+                var marker = new google.maps.Marker({
+                    position: markerPosition,
+                    icon: icon,
+                    map: map
+                });
 
-    //             // Add markers to the array
-    //             googleMarkers.push(marker);
-    //         }
-    //     });
-    // }
+                // Add markers to the array
+                googleMarkers.push(marker);
+            }
+        });
+    }
 </script>
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7HpBJ6pCZGP7tjZd8nqUXqKjiZZ-zQ0M&callback=initMap">

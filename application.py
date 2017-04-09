@@ -122,7 +122,7 @@ def sns():
                 socketio.emit('realTimeResponse', tweet_js)
 
 
-    return render_template('home1.html')
+    return render_template('TwitterMap.html')
 
 @application.route('/home')
 def home():
@@ -149,35 +149,35 @@ def handle_realtime_event(message):
     #     tweets.append(tweet)
 
     # send(json.dumps(tweets))
-@socketio.on('message')
-def handle_message(message):
-    if message == 'Init':
-        # Run local elastic search
-        #queryURL = 'elastic search endpoint'
-        # queryURL = 'http://localhost:9201/tweetmap/_search?q=*:*&size=1000'
-        queryURL = 'http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet/_search?q=*:*&size=10'
-        response = requests.get(queryURL)
-        results = json.loads(response.text)
+# @socketio.on('message')
+# def handle_message(message):
+#     if message == 'Init':
+#         # Run local elastic search
+#         #queryURL = 'elastic search endpoint'
+#         # queryURL = 'http://localhost:9201/tweetmap/_search?q=*:*&size=1000'
+#         queryURL = 'http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet/_search?q=*:*&size=10'
+#         response = requests.get(queryURL)
+#         results = json.loads(response.text)
 
-        print("INIT MAP")
-    else:
-        queryKeyWord = message.replace(' ', '%20')
-        queryURL = 'elastic search endpoint'
-        # queryURL = 'http://localhost:9201/tweetmap/_search?q=' + queryKeyWord + '&size=1000'
-        queryURL = 'http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet/_search?q='
-        queryURL=queryURL+queryKeyWord+'&size=25'
-        response = requests.get(queryURL)
-        results = json.loads(response.text)
-        print("SEARCH " + str(message))
+#         print("INIT MAP")
+#     else:
+#         queryKeyWord = message.replace(' ', '%20')
+#         queryURL = 'elastic search endpoint'
+#         # queryURL = 'http://localhost:9201/tweetmap/_search?q=' + queryKeyWord + '&size=1000'
+#         queryURL = 'http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet/_search?q='
+#         queryURL=queryURL+queryKeyWord+'&size=25'
+#         response = requests.get(queryURL)
+#         results = json.loads(response.text)
+#         print("SEARCH " + str(message))
 
-    # Find locations of each tweet
-    tweets = []
-    for result in results['hits']['hits']:
-        tweet = {'sentiment': result['_source']['sentiment'], 'location': result['_source']['location']}
-        print len(result['_source']['location']) 
-        tweets.append(tweet)
+#     # Find locations of each tweet
+#     tweets = []
+#     for result in results['hits']['hits']:
+#         tweet = {'sentiment': result['_source']['sentiment'], 'location': result['_source']['location']}
+#         print len(result['_source']['location']) 
+#         tweets.append(tweet)
 
-    send(json.dumps(tweets))
+#     send(json.dumps(tweets))
 
 
 if __name__ == '__main__':

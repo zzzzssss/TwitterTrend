@@ -28,7 +28,7 @@ def worker():
         for message in queue.receive_messages(MaxNumberOfMessages=10, WaitTimeSeconds=20): #message.body type: unicode
             try:
                 tweet = json.loads(message.body)   #tweet type:dict
-                print tweet
+                #print tweet
                 #response = alchemy_language.sentiment(text=tweet['text'])   #tweet['text']: unicode
                 #if response['status'] == 'OK':
                 emotional=['positive','negative','neutral']
