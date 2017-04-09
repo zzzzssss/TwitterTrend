@@ -156,7 +156,7 @@ def home():
                 print queryKeyWord
                 socketio.emit('realTimeResponse', tweet_js)
 
-    return render_template('home1.html')
+    return render_template('home1.html',selected=queryKeyWord)
 
 
 @socketio.on('message')
