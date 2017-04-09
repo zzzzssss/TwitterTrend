@@ -76,8 +76,8 @@
 <script>
     // Create socket
     var socket;
-    var interval;
-    var timeInterval = 5000;
+    // var interval;
+    // var timeInterval = 5000;
     
     function initMap() {
 
@@ -208,11 +208,11 @@
 
     // Function handling the search
     $('#searchButton').on('click', function(){
-        clearInterval(interval);
+        // clearInterval(interval);
         var keyWord = $('#keyword').val();
 
         sendSocketMessage(keyWord);
-        interval = setInterval(sendSocketMessage, timeInterval, keyWord);
+        // interval = setInterval(sendSocketMessage, timeInterval, keyWord);
     });
 
 </script>
