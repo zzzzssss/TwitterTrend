@@ -7,7 +7,6 @@ import math
 import requests
 import json
 from requests_aws4auth import AWS4Auth
-# Elastic Beanstalk initalization
 application = Flask(__name__)
 #application.debug=True
 socketio = SocketIO(application)
@@ -17,7 +16,6 @@ application.secret_key = 'cC1YCIWOj9GgWspgNEo2'
 
 esurl='http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet'
 host='search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com'
-#awsauth=AWS4Auth('AKIAJ4DLBU4HQGRC37FA', 'py3eHrRr1TQ0PzADrCzdAQsHtKtCnS0TcmA/lqwy', 'us-west-2', 'es')
 
 # es = Elasticsearch(
 #     hosts=[{'host': host, 'port': 423}],
@@ -146,12 +144,13 @@ def home():
             print a['text']
             
             r = requests.post(esurl, data=tweet_js)
-            
+        #####uncomment if want to filter with new coming twitter with keyword
         # if socketConnected and queryKeyWord in a['text']: 
         #         print "filter queryKeyWord backend"
         #         print queryKeyWord
         #         socketio.emit('realTimeResponse', tweet_js)
 
+        #####filter without new coming twitter with keyword
         if socketConnected: 
                 print "filter without queryKeyWord backend"
                 print queryKeyWord
@@ -160,34 +159,11 @@ def home():
     return render_template('home1.html')
 
 
-# @socketio.on('realTime')
-# def handle_realtime_event(message):
-#     global socketConnected
-#     socketConnected = True
-#     print('received message:' + message)
-#     #Fetch tweets in elastic search
-#     #queryURL = 'http://localhost:9201/tweetmap/_search?q=*:*&size=1000'
-#     queryURL = 'http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet/_search?q=*:*&size=10'
-#     response = requests.get(queryURL)
-#     results = json.loads(response.text)
-
-#     tweets = []
-#     print len(results['hits']['hits'])
-#     for result in results['hits']['hits']:
-#         tweet = {'sentiment': result['_source']['sentiment'], 'location': result['_source']['location']}
-#         #print result['_source']['location']
-#         tweets.append(tweet)
-
-#     send(json.dumps(tweets))
 @socketio.on('message')
 def handle_message(message):
     global socketConnected
     global queryKeyWord
-
     if message == 'Init':
-        # Run local elastic search
-        #queryURL = 'elastic search endpoint'
-        # queryURL = 'http://localhost:9201/tweetmap/_search?q=*:*&size=1000'
         queryURL = 'http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet/_search?q=*:*&size=0'
         response = requests.get(queryURL)
         results = json.loads(response.text)
@@ -196,19 +172,17 @@ def handle_message(message):
     else:
         queryKeyWord = message.replace(' ', '%20')
         socketConnected = True
-        queryURL = 'elastic search endpoint'
-        # queryURL = 'http://localhost:9201/tweetmap/_search?q=' + queryKeyWord + '&size=1000'
         queryURL = 'http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet/_search?q='
-        queryURL=queryURL+queryKeyWord+'&size=100'
+        #show 10 twitter location on map when searching
+        queryURL=queryURL+queryKeyWord+'&size=10'
         response = requests.get(queryURL)
         results = json.loads(response.text)
         print("SEARCH " + str(message))
 
-    # Find locations of each tweet
+    # locations of each tweet
     tweets = []
     for result in results['hits']['hits']:
         tweet = {'sentiment': result['_source']['sentiment'], 'location': result['_source']['location']}
-        
         tweets.append(tweet)
     print len(tweets) 
 
