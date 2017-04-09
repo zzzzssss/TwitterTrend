@@ -141,9 +141,10 @@ def home():
             
         if hdr == 'Notification':
             tweet_js = js['Message']
+            print js['Message']
+            print type(js['Message'])
             r = requests.post(esurl, data=tweet_js)
-            print r.text
-            print type(r.text)
+            
         if socketConnected: 
                 socketio.emit('realTimeResponse', tweet_js)
 
