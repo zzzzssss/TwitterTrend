@@ -99,7 +99,7 @@
                 icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
             }
 
-            var markerPosition = {lat: ['location'][0], lng: ['location'][1]};
+            var markerPosition = {lat: location[0], lng: location[1]};
 
             var marker = new google.maps.Marker({
                 position: markerPosition,
@@ -133,7 +133,7 @@
                     icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
                 }
 
-                var markerPosition = {lat: ['location'][0], lng: ['location'][1]};
+                var markerPosition = {lat: location[0], lng: location[1]};
 
                 var marker = new google.maps.Marker({
                     position: markerPosition,
