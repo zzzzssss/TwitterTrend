@@ -141,8 +141,10 @@ def home():
             
         if hdr == 'Notification':
             tweet_js = js['Message']
-            print js['Message']
-            print type(js['Message'])
+            # print js['Message']
+            # print type(js['Message'])
+            print js['Message']['text']
+            print type(js['Message']['text'])
             r = requests.post(esurl, data=tweet_js)
             
         if socketConnected: 
