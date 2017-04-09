@@ -137,16 +137,16 @@ def handle_realtime_event(message):
     print('received message:' + message)
     #Fetch tweets in elastic search
     #queryURL = 'http://localhost:9201/tweetmap/_search?q=*:*&size=1000'
-    queryURL = 'http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet/_search?q=*:*&size=10000'
-    response = requests.get(queryURL)
-    results = json.loads(response.text)
+    # queryURL = 'http://search-movie-vpmtwgvr57yoata6seazfnpyfe.us-west-2.es.amazonaws.com/test-index2/tweet/_search?q=*:*&size=10000'
+    # response = requests.get(queryURL)
+    # results = json.loads(response.text)
 
-    tweets = []
-    print len(results['hits']['hits'])
-    for result in results['hits']['hits']:
-        tweet = {'sentiment': result['_source']['sentiment'], 'location': result['_source']['location']}
-        #print result['_source']['location']
-        tweets.append(tweet)
+    # tweets = []
+    # print len(results['hits']['hits'])
+    # for result in results['hits']['hits']:
+    #     tweet = {'sentiment': result['_source']['sentiment'], 'location': result['_source']['location']}
+    #     #print result['_source']['location']
+    #     tweets.append(tweet)
 
     send(json.dumps(tweets))
 @socketio.on('message')
