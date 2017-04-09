@@ -41,6 +41,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="/">TweetTrend</a>
+            <a class="navbar-brand" > keyword: {{selected}}</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -61,13 +62,13 @@
                         <li><a href="javascript: queryKeyWord('Hilarious');">Hilarious</a></li>
                     </ul>
                 </li>
+                
             </ul>
             <form class="navbar-form navbar-left">
                 <input type="text" class="form-control" id="keyword" placeholder="Type Keyword">
                 <button type="button" class="btn btn-default" id="searchButton">Search</button>
             </form>
-      
-       <a class="navbar-form navbar-left" href="#"> keyword: {{selected}}</a>
+            
   
         </div>
     </div>
