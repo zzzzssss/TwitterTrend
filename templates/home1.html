@@ -45,7 +45,7 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="/">Home</a></li>
-                <li class="active"><a href="/search">Search</a></li>
+                <li class="active"><a href="/home">Search</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -79,7 +79,7 @@
     var socket;
     var interval;
     var timeInterval = 5000;
-    var googleMarkers = [];
+    
     function initMap() {
 
         // Init google map
@@ -90,90 +90,60 @@
         });
 
         // An array to store all markers
-        
+        var googleMarkers = [];
 
         // Establish socket connection
         //socket = io.connect('http://' + document.domain + ':' + location.port);
 
         socket = io.connect(null, {port: location.port, rememberTransport:false});
 
-
         socket.on('connect', function(){
-            socket.emit('realTime', "CONNECTED");
-            console.log("Connected!");
+            setUpMap();
+            console.log('Init');
+        });
+
+
         
-            // setUpMap();
-            // console.log('Init');
-        });
-        
-    socket.on('realTimeResponse', function(tweet) {
-            console.log("New Tweet");
-            var tweetJSON = JSON.parse(tweet);
-            var location = tweetJSON['location'];
-            var sentiment = tweetJSON['sentiment'];
-            console.log("got location and setiment");
+        socket.on('message', function(tweets){
+                  console.log("query Tweet");
+
+                  // Clear Map
+                  clearMarkers(googleMarkers);
+
+                  // Parse JSON
+                  var tweetsJSON = JSON.parse(tweets);
 
 
-            var icon;
-            if (sentiment == 'positive') {
-                icon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
-            } else if (sentiment == 'negative') {
-                icon = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
-            } else {
-                icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
-            }
+                  // Parse every tweet in tweetsJSON
+                  for (var x in tweetsJSON) {
+                      var location = tweetsJSON[x]['location'];
+                      
+                      var sentiment = tweetsJSON[x]['sentiment'];
+                      console.log("got location and setiment");
 
-            var markerPosition = {lat: location[1], lng: location[0]};
+                      var icon;
+                      // Change color based on sentiment
+                      if (sentiment == 'positive') {
+                          icon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+                      } else if (sentiment == 'negative') {
+                          icon = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+                      } else {
+                          icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+                      }
 
-            var marker = new google.maps.Marker({
-                position: markerPosition,
-                icon: icon,
-                map: map
-            });
+                      var markerPosition = {lat: location[1], lng: location[0]};
 
-            // Add markers to the array
-            googleMarkers.push(marker);
-        });
-socket.on('message', function(tweets){
-            console.log("query Tweet");
+                      var marker = new google.maps.Marker({
+                          position: markerPosition,
+                          icon: icon,
+                          map: map
+                      });
 
-            // Clear Map
-            clearMarkers(googleMarkers);
-
-            // Parse JSON
-            var tweetsJSON = JSON.parse(tweets);
-
-
-            // Parse every tweet in tweetsJSON
-            for (var x in tweetsJSON) {
-                var location = tweetsJSON[x]['location'];
-                
-                var sentiment = (tweetsJSON[x]['sentiment']);
-                console.log("got location and setiment");
-
-                var icon;
-                // Change color based on sentiment
-                if (sentiment == 'positive') {
-                    icon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
-                } else if (sentiment == 'negative') {
-                    icon = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
-                } else {
-                    icon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
-                }
-
-                var markerPosition = {lat: location[1], lng: location[0]};
-
-                var marker = new google.maps.Marker({
-                    position: markerPosition,
-                    icon: icon,
-                    map: map
-                });
-
-                // Add markers to the array
-                googleMarkers.push(marker);
-            }
-        });
-    }
+                      // Add markers to the array
+                      googleMarkers.push(marker);
+                  }
+              });
+          }
 
     // Function used to set up the map
     function setUpMap(){
