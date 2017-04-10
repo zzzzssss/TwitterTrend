@@ -27,7 +27,7 @@ class StdOutListener(StreamListener):
                 tweet = {'user': status.user.screen_name, 'text': status.text,
                          'location': status.coordinates['coordinates'], 'time': str(status.created_at)}
 
-                # Write record to kafka
+                # Write record to kafka, topic name tweet: remember to create topic tweet before running
                 producer.send('tweet', value = tweet)
 
                 print tweet

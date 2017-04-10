@@ -8,7 +8,7 @@ import random
 
 alchemy_language = AlchemyLanguageV1(api_key='3946e2353ef5132f59f5fc47536fb8ac67882707')
 
-consumer = KafkaConsumer('tweet', group_id = 'tweet-stream', bootstrap_servers = ['localhost:9092'], value_deserializer = lambda m: json.loads(m.decode('utf-8')))
+consumer = KafkaConsumer('tweet', bootstrap_servers = ['localhost:9092'], value_deserializer = lambda m: json.loads(m.decode('utf-8')))
 
 
 # sqs = boto3.resource('sqs')
@@ -16,7 +16,7 @@ consumer = KafkaConsumer('tweet', group_id = 'tweet-stream', bootstrap_servers =
 
 
 client = boto3.client('sns')
-response = client.create_topic(Name = 'tweets')
+response = client.create_topic(Name = 'kafka')
 topicArn = response['TopicArn']
 subscribeResponse = client.subscribe(TopicArn = topicArn, Protocol = 'http', Endpoint = 'http://lowcost-env.mg2pfegsvr.us-west-2.elasticbeanstalk.com/')
 #subscribeResponse = client.subscribe(TopicArn = topicArn, Protocol = 'http', Endpoint = 'http://54.202.67.200:5000/')
@@ -30,22 +30,21 @@ subscribeResponse = client.subscribe(TopicArn = topicArn, Protocol = 'http', End
 def worker():
     while True:
         for message in consumer: #message.body type: unicode
+            #print message
+            tweet = {'text': message.value['text'], 'user': message.value['user'],
+             'time': message.value['time'], 'location': message.value['location']}
+            print tweet
             try:
-                tweet = json.loads(message.body)   #tweet type:dict
-                #print tweet
                 #response = alchemy_language.sentiment(text=tweet['text'])   #tweet['text']: unicode
                 #if response['status'] == 'OK':
                 emotional=['positive','negative','neutral']
                 tweet['sentiment'] = random.choice(emotional)
                 print tweet['sentiment'] 
-                    # Publish to Amazon SNS
+                # Publish to Amazon SNS
                 client.publish(TopicArn = topicArn, Message=json.dumps(tweet, ensure_ascii=True))
-            #except:
-                #pass
+            except:
 
-            finally:
-                message.delete()
-
+                pass
 if __name__ == '__main__':
     worker()
      #pool = Pool(3)
